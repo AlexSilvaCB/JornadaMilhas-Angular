@@ -1,0 +1,14 @@
+:host{
+  .card{
+    padding: 24px;
+    &.primary{
+      background-color: #FEF7FF;
+      border: 1px solid #CAC4D0;
+      border-radius: 12px;
+    }
+    &.secundary{
+      background-color: #F5F5F5;
+      border-radius: 16px;
+    }
+  }
+}
