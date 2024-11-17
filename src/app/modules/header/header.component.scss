@@ -1,0 +1,17 @@
+:host{
+
+  .app-header{
+    mat-toolbar{
+     padding: 0 256px;
+    }
+
+    button{
+      margin: 0 16px;
+    }
+
+    .example-spacer {
+      flex: 1 1 auto;
+    }
+
+  }
+}
