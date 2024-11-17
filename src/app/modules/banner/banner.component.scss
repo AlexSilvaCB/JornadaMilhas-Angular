@@ -1,0 +1,16 @@
+:host{
+figure{
+  margin: 0;
+  img{
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .banner{
+    display: flex;
+    justify-content: center;
+  }
+}
+
+}

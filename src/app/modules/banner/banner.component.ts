@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
 
 @Component({
   selector: 'app-banner',
@@ -8,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './banner.component.scss'
 })
 export class BannerComponent {
+
+  @Input() alt: string = '';
+  //versão 18
+  srcSignal = input.required<string>()
 
 }
