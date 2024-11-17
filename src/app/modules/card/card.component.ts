@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { ContainerComponent } from '../container/container.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CommonModule, ContainerComponent],
+  imports: [CommonModule],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
