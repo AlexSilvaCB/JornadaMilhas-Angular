@@ -4,11 +4,12 @@ import { BannerComponent } from '../../modules/banner/banner.component';
 import { ContainerComponent } from '../../modules/container/container.component';
 import { FooterComponent } from '../../modules/footer/footer.component';
 import { CardBuscaComponent } from '../../modules/card-busca/card-busca.component';
+import { CardDepoimentoComponent } from '../../modules/card-depoimento/card-depoimento.component';
 
 @Component({
   selector: 'app-principal-jornada',
   standalone: true,
-  imports: [HeaderComponent, BannerComponent, ContainerComponent, FooterComponent, CardBuscaComponent ],
+  imports: [HeaderComponent, BannerComponent, ContainerComponent, FooterComponent, CardBuscaComponent, CardDepoimentoComponent ],
   templateUrl: './principal-jornada.component.html',
   styleUrl: './principal-jornada.component.scss'
 })
