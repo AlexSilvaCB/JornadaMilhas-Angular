@@ -7,10 +7,10 @@
           <mat-button-toggle>IDA E VOLTA</mat-button-toggle>
           <mat-button-toggle>SOMENTE IDA</mat-button-toggle>
         </mat-button-toggle-group>
-        <mat-chip-set aria-label="Seleção de Passagens">
+        <mat-chip-listbox (click)="openDialog()" aria-label="Seleção de Passagens">
           <mat-chip-option><span>01 Adulto</span></mat-chip-option>
           <mat-chip-option><span>Econômica</span></mat-chip-option>
-        </mat-chip-set>
+        </mat-chip-listbox>
       </div>
       <div class="flex-container">
         <mat-form-field class="input-container" appearance="outline">
