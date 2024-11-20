@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import { Promocao } from '../../core/types/types';
 
 @Component({
   selector: 'app-card-busca',
@@ -10,5 +11,8 @@ import {MatButtonModule} from '@angular/material/button';
   styleUrl: './card-busca.component.scss'
 })
 export class CardBuscaComponent {
+
+  @Input() inputCardPromocoes!: Promocao;
+
 
 }

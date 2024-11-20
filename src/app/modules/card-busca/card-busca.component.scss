@@ -3,9 +3,14 @@
     max-width: 320px;
     background-color: #FEF7FF;
     border-radius: 12px;
+    transition: .3s;
+    overflow: hidden;
+    img{
+      transition: .5s;
+    }
     button {
       width: 100%;
-      margin: 0 16px 48 px;
+      margin: 0 16px 30px;
     }
     ul{
       list-style: none;
@@ -19,6 +24,13 @@
         text-align: center;
       }
     }
+  }
+
+  .card-busca:hover{
+    box-shadow: 1px 1px 10px #1E90FF;
+   img{
+    transform: scale(1.1);
+   }
   }
 
 }

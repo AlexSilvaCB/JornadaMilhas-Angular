@@ -5,12 +5,9 @@
   <app-container>
     <h2>Promoções</h2>
     <section class="card-wrapper">
-      <app-card-busca />
-      <app-card-busca />
-      <app-card-busca />
-      <app-card-busca />
-      <app-card-busca />
-      <app-card-busca />
+      @for (item of _listaPromocoes(); track $index) {
+        <app-card-busca [inputCardPromocoes]="item" />
+      }
     </section>
     <h2>Depoimentos</h2>
     <section class="card-wrapper">
