@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
+import { DepoimentoService } from '../../core/services/depoimento.service';
+import { Depoimentos } from '../../core/types/types';
 
 @Component({
   selector: 'app-card-depoimento',
@@ -8,13 +10,23 @@ import {MatCardModule} from '@angular/material/card';
   templateUrl: './card-depoimento.component.html',
   styleUrl: './card-depoimento.component.scss'
 })
-export class CardDepoimentoComponent {
+export class CardDepoimentoComponent implements OnInit {
 
-  depoimento: string = `
-  Recomendo fortemente a agência de viagens Jornada.
-  Eles oferecem um serviço personalizado e de alta qualidade
-  que excedeu minhas expectativas em minha última viagem.
-`
-autoria: string = 'Mariana Faustino'
+ protected depoimentoService = inject(DepoimentoService)
 
+ protected cardDepoimento: Depoimentos[] = []
+
+ ngOnInit(): void {
+  this.listarDepoimentos()
+}
+
+protected listarDepoimentos(){
+  this.depoimentoService.listarDepoimento$().subscribe({
+    next:(res)=>{
+      this.cardDepoimento = res
+      console.log(res)},
+    error:(error) =>
+      alert("Falha ao conectar dados")
+  })
+}
 }

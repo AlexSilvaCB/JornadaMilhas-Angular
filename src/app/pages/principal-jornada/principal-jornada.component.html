@@ -4,18 +4,13 @@
 <article>
   <app-container>
     <h2>Promoções</h2>
-    <section class="card-wrapper">
-      @for (item of _listaPromocoes(); track $index) {
-        <app-card-busca [inputCardPromocoes]="item" />
-      }
+    <section>
+      <app-card-busca />
     </section>
     <h2>Depoimentos</h2>
-    <section class="card-wrapper">
-      <app-card-depoimento />
-      <app-card-depoimento />
+    <section>
       <app-card-depoimento />
     </section>
-
   </app-container>
 </article>
 <app-container />

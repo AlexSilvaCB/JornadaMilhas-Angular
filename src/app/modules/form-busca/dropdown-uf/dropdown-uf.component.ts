@@ -26,14 +26,13 @@ export class DropdownUfComponent implements OnInit {
   @Input() iconePrefix:string = ''
   @Input() control!: FormControl;
 
-  options: UnidadeFederativa[] = [];
-  filteredOptions!: Observable<UnidadeFederativa[]>;
+  protected options: UnidadeFederativa[] = [];
+  protected filteredOptions!: Observable<UnidadeFederativa[]>;
 
   ngOnInit() {
     this.unidFederativaService.listar().subscribe({
       next:(dados)=>{
         this.options = dados
-        console.log(dados)
       }
     })
 

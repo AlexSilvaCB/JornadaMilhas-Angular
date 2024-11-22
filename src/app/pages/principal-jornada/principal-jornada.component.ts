@@ -6,8 +6,6 @@ import { FooterComponent } from '../../modules/footer/footer.component';
 import { CardBuscaComponent } from '../../modules/card-busca/card-busca.component';
 import { CardDepoimentoComponent } from '../../modules/card-depoimento/card-depoimento.component';
 import { FormBuscaComponent } from '../../modules/form-busca/form-busca.component';
-import { PromocaoService } from '../../core/services/promocao.service';
-import { Promocao } from '../../core/types/types';
 
 @Component({
   selector: 'app-principal-jornada',
@@ -16,26 +14,8 @@ import { Promocao } from '../../core/types/types';
   templateUrl: './principal-jornada.component.html',
   styleUrl: './principal-jornada.component.scss'
 })
-export class PrincipalJornadaComponent implements OnInit {
-  #apiJornada = inject(PromocaoService)
-
+export class PrincipalJornadaComponent {
   protected srcHome: string = "imagens/banner-homepage.png"
   protected altHome: string = "Banner Jornada Milha"
-  protected _listaPromocoes = signal<Promocao[]>([])
-
-  constructor(){}
-
-  ngOnInit(): void {
-    this.listaJornadaPromoções()
-  }
-
-  listaJornadaPromoções(){
-    this.#apiJornada.listar$().subscribe({
-      next:(result) => {
-        this._listaPromocoes.set(result)
-      }
-    })
-  }
-
 
 }

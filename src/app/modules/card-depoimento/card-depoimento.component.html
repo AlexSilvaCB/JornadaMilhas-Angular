@@ -1,11 +1,15 @@
-<mat-card class="card-depoimento" appearance="outlined">
-  <mat-card-content>
-  <img mat-card-md-image src="imagens/avatar3.png"  alt="Avatar da pessoa autora do depoimento">
-    <ul>
-      <li>
-        {{ depoimento }}
-      </li>
-      <li><strong>{{ autoria }}</strong></li>
-    </ul>
-  </mat-card-content>
-</mat-card>
+<div class="card-wrapper">
+@for (item of cardDepoimento; track $index) {
+  <mat-card class="card-depoimento" appearance="outlined">
+    <mat-card-content>
+    <img mat-card-md-image src="{{ item.avatar }}"  alt="Avatar da pessoa autora do depoimento">
+      <ul>
+        <li>
+          {{ item.texto }}
+        </li>
+        <li><strong>{{ item.autor }}</strong></li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+}
+</div>

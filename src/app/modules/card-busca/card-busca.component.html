@@ -1,12 +1,17 @@
-<mat-card class="card-busca" appearance="outlined">
-  <img mat-card-image src="{{ inputCardPromocoes.imagem }}" alt="Imagem de {{ inputCardPromocoes.destino }}">
-  <mat-card-content>
-    <ul>
-      <li>{{ inputCardPromocoes.destino }}</li>
-      <li>R$ {{ inputCardPromocoes.preco }}</li>
-    </ul>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-flat-button>VER DETALHES</button>
-  </mat-card-actions>
-</mat-card>
+<div class="card-wrapper">
+  @for (item of _listaPromocoes(); track $index) {
+  <mat-card class="card-busca" appearance="outlined">
+    <img mat-card-image src="{{ item.imagem }}" alt="Imagem de {{ item.destino }}">
+    <mat-card-content>
+      <ul>
+        <li>{{ item.destino }}</li>
+        <li>R$ {{ item.preco }}</li>
+      </ul>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button>VER DETALHES</button>
+    </mat-card-actions>
+  </mat-card>
+}
+</div>
+
