@@ -18,7 +18,6 @@ export class PromocaoService {
     return this.#httpClient.get<Promocao[]>(`${this.#apiUrl}/promocoes`).pipe(
       shareReplay(),
       tap((res) => (res)),
-      tap((res) => console.log(res))
     )
   }
 }

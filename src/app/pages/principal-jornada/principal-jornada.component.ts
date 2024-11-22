@@ -8,12 +8,11 @@ import { CardDepoimentoComponent } from '../../modules/card-depoimento/card-depo
 import { FormBuscaComponent } from '../../modules/form-busca/form-busca.component';
 import { PromocaoService } from '../../core/services/promocao.service';
 import { Promocao } from '../../core/types/types';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-principal-jornada',
   standalone: true,
-  imports: [HeaderComponent, BannerComponent, ContainerComponent, FooterComponent, CardBuscaComponent, CardDepoimentoComponent, FormBuscaComponent, JsonPipe],
+  imports: [HeaderComponent, BannerComponent, ContainerComponent, FooterComponent, CardBuscaComponent, CardDepoimentoComponent, FormBuscaComponent],
   templateUrl: './principal-jornada.component.html',
   styleUrl: './principal-jornada.component.scss'
 })

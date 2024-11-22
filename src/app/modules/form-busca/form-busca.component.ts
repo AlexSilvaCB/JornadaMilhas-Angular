@@ -7,21 +7,27 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { ContainerComponent } from '../container/container.component';
 import { CardComponent } from '../card/card.component';
 import { ModalComponent } from '../modal/modal.component';
+import { FormBuscaService } from '../../core/services/form-busca.service';
+import { DropdownUfComponent } from './dropdown-uf/dropdown-uf.component';
+
 
 
 @Component({
   selector: 'app-form-busca',
   standalone: true,
-  imports: [ContainerComponent, CardComponent, MatButtonToggleModule, MatChipsModule, MatFormFieldModule, MatIconModule, MatInputModule, MatDatepickerModule,  MatNativeDateModule, MatButtonModule],
+  imports: [ContainerComponent, CardComponent, MatButtonToggleModule, MatChipsModule, MatIconModule, MatInputModule, MatDatepickerModule, MatFormFieldModule, MatNativeDateModule, MatButtonModule, ReactiveFormsModule, DropdownUfComponent],
   templateUrl: './form-busca.component.html',
   styleUrl: './form-busca.component.scss'
 })
 export class FormBuscaComponent {
   readonly dialog = inject(MatDialog);
+ formBuscaService = inject(FormBuscaService)
 
   openDialog() {
     this.dialog.open(ModalComponent);
