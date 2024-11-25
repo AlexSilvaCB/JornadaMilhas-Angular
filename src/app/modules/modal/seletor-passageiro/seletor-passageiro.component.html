@@ -1,0 +1,9 @@
+<ul>
+  <li>{{ titulo }}</li>
+  <li>{{ subtitulo }}</li>
+  <li>
+    <app-botao-controle operacao="incrementar" (click)="incrementar(titulo)" />
+    <span>{{ value }}</span>
+    <app-botao-controle operacao="decrementar" (click)="decrementar(titulo)" />
+  </li>
+</ul>

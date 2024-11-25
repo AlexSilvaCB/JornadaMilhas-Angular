@@ -23,8 +23,7 @@ export class CardDepoimentoComponent implements OnInit {
 protected listarDepoimentos(){
   this.depoimentoService.listarDepoimento$().subscribe({
     next:(res)=>{
-      this.cardDepoimento = res
-      console.log(res)},
+      this.cardDepoimento = res},
     error:(error) =>
       alert("Falha ao conectar dados")
   })

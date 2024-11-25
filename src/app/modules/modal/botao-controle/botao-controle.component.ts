@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './botao-controle.component.scss'
 })
 export class BotaoControleComponent {
-  @Input()operacao: 'incremento' | 'decremento' = 'incremento'
+  @Input()operacao: 'incrementar' | 'decrementar' = 'incrementar'
   @Input()src:string = ''
   @Input()alt:string = ''
 

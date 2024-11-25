@@ -10,12 +10,19 @@ import { FormBuscaComponent } from '../../modules/form-busca/form-busca.componen
 @Component({
   selector: 'app-principal-jornada',
   standalone: true,
-  imports: [HeaderComponent, BannerComponent, ContainerComponent, FooterComponent, CardBuscaComponent, CardDepoimentoComponent, FormBuscaComponent],
+  imports: [
+    HeaderComponent,
+    BannerComponent,
+    ContainerComponent,
+    FooterComponent,
+    CardBuscaComponent,
+    CardDepoimentoComponent,
+    FormBuscaComponent,
+  ],
   templateUrl: './principal-jornada.component.html',
-  styleUrl: './principal-jornada.component.scss'
+  styleUrl: './principal-jornada.component.scss',
 })
 export class PrincipalJornadaComponent {
-  protected srcHome: string = "imagens/banner-homepage.png"
-  protected altHome: string = "Banner Jornada Milha"
-
+  protected srcHome: string = 'imagens/banner-homepage.png';
+  protected altHome: string = 'Banner Jornada Milha';
 }
