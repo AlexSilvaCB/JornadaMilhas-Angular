@@ -29,4 +29,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class ModalComponent {
   protected formBuscaService = inject(FormBuscaService);
+
+  btnCancelar(){
+    this.formBuscaService.formBusca.reset()
+  }
 }

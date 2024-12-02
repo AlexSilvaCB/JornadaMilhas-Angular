@@ -1,0 +1,17 @@
+<mat-form-field class="input-container" appearance="outline">
+  <mat-label>{{ titulo }}</mat-label>
+  <input matInput
+  [matDatepicker]="dadosTitulo"
+  #valueInput
+  (dateChange)="InputViagemData(valueInput.value, selecao)"
+  />
+  <mat-datepicker-toggle
+    matIconSuffix
+    [for]="dadosTitulo"
+  ></mat-datepicker-toggle>
+  <mat-datepicker #dadosTitulo></mat-datepicker>
+  @if(formBuscaService.formBusca.get(selecao)?.hasError('pattern')){
+    <mat-hint>Formato data error: DD/MM/YYYY</mat-hint>
+  }
+</mat-form-field>
+

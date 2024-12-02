@@ -1,15 +1,22 @@
-  <mat-form-field class="input-container" appearance="outline">
-    <mat-label>{{ label }}</mat-label>
-    <mat-icon matPrefix>{{ iconePrefix }}</mat-icon>
-    <input matInput
-          [formControl]="control"
-          [matAutocomplete]="auto">
-    <mat-icon matSuffix>search</mat-icon>
-    <mat-autocomplete #auto="matAutocomplete">
-      @for (option of filteredOptions | async; track option) {
-        <mat-option [value]="option.nome">{{option.nome}}</mat-option>
+<mat-form-field class="input-container" appearance="outline">
+  <mat-label>{{ label }}</mat-label>
+  <mat-icon matPrefix>{{ iconePrefix }}</mat-icon>
+  <input
+    type="text"
+    matInput
+    [formControl]="control"
+    [matAutocomplete]="auto"
+    (focus)="focusI()"
+  />
+  <mat-icon matSuffix>search</mat-icon>
+  <mat-autocomplete #auto="matAutocomplete">
+    @for (option of filteredOptions | async; track option) {
+    <mat-option [value]="option.nome">{{ option.nome }}</mat-option>
     }
-    </mat-autocomplete>
-  </mat-form-field>
-
-
+  </mat-autocomplete>
+  @if ( formBuscaService.formBusca.get(label.toLocaleLowerCase())?.value != '' &&
+  formBuscaService.formBusca.get(label.toLocaleLowerCase())?.hasError('estadoInvalido')
+  ) {
+  <mat-hint>Escolha um estado do Brasil</mat-hint>
+  }
+</mat-form-field>

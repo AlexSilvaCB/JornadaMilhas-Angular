@@ -13,21 +13,17 @@
       align-items: center;
       gap: 12px;
       margin: 16px 0;
-    }
 
-    .input-container{
-      margin-bottom: -1.25em;
-    }
-
-    .mat-button-toggle-checked {
-      color: #0000CD;
-    }
-
-    mat-chip-set{
-      .mat-mdc-standard-chip.mdc-evolution-chip--selected:not(.mdc-evolution-chip--disabled){
-        span{
-          color: #0000CD;
+      mat-chip-set{
+        button{
+          margin-left: 10px;
         }
+      }
+
+      .btnselecao{
+        background-color: #dae2f9;
+        color: black;
+        border: 1px solid gray;
       }
     }
 

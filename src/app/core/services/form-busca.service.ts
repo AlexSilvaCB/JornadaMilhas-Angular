@@ -1,12 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   NonNullableFormBuilder,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../modules/modal/modal.component';
 import { MatChipSelectionChange } from '@angular/material/chips';
+import { UnidadeFederativa } from '../types/types';
 
 @Injectable({
   providedIn: 'root',
@@ -15,20 +18,36 @@ export class FormBuscaService {
   readonly dialog = inject(MatDialog);
   #fb = inject(NonNullableFormBuilder);
 
-  contAdulto: number = 1;
-  contCrianca: number = 0;
-  contBebe: number = 0;
+  inputListValidator: UnidadeFederativa[] = [];
 
-  valuePessoa: number = 0
+  valuePessoa: number = 0;
 
   formBusca = this.#fb.group({
     formaViagem: ['', [Validators.required]],
-    origem: [null, [Validators.required]],
-    destino: [null, [Validators.required]],
-    tipo: ['Econômica', [Validators.required]],
-    adultos: [this.contAdulto, [Validators.required]],
+    origem: ['', [Validators.required, this.estadoValidator()]],
+    destino: ['', [Validators.required, this.estadoValidator()]],
+    tipo: ['', [Validators.required]],
+    adultos: [0, [Validators.required]],
     criancas: [0],
     bebes: [0],
+    dateIda: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(
+          /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
+        ),
+      ],
+    ],
+    dateVolta: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(
+          /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
+        ),
+      ],
+    ],
   });
 
   constructor() {}
@@ -70,5 +89,13 @@ export class FormBuscaService {
 
   openDialog() {
     this.dialog.open(ModalComponent);
+  }
+
+  estadoValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const estados: UnidadeFederativa[] = this.inputListValidator;
+      const isValid = estados.some((estado) => estado.nome === control.value);
+      return isValid ? null : { estadoInvalido: { value: control.value } };
+    };
   }
 }

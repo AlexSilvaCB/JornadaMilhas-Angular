@@ -11,26 +11,30 @@
           <mat-button-toggle value="SOMENTE IDA">SOMENTE IDA</mat-button-toggle>
         </mat-button-toggle-group>
 
-        <mat-chip-listbox aria-label="Seleção de Passagens">
-          <mat-chip-option
-            (click)="formBuscaService.openDialog()"
-            [selected]="
-              formBuscaService.formBusca.get('tipo')?.value === 'Executiva' ||
-              'Econômica'
-            "
-          >
+        <mat-chip-set aria-label="Seleção de Passagens">
+          @if(formBuscaService.formBusca.value.tipo == ''){
+          <button type="button" mat-stroked-button style="color: black">Econômica</button>
+          }@else {
+          <button type="button" class="btnselecao" mat-flat-button>
+            <mat-icon fontIcon="check"></mat-icon>
             {{ formBuscaService.formBusca.value.tipo }}
-          </mat-chip-option>
-          <!--  <mat-chip-option (click)="formBuscaService.openDialog()">Executiva</mat-chip-option> -->
-        </mat-chip-listbox>
-
-        <mat-chip-set aria-label="Seleção de Passagens" class="pessoaForm">
-          <mat-chip-option>{{
-            formBuscaService.getDescricaoPassageiros()
-          }}</mat-chip-option>
-          <!--<mat-chip-option >Crianças(s)</mat-chip-option>
-          <mat-chip-option >Bebes(s)</mat-chip-option>-->
+          </button>
+          }
         </mat-chip-set>
+
+        <mat-chip-set aria-label="Seleção de Passageiros">
+          @if(formBuscaService.formBusca.value.adultos == 0){
+          <button type="button" mat-stroked-button style="color: black">Passageiro(s)</button>
+          }@else {
+          <button type="button" class="btnselecao" mat-flat-button>
+            <mat-icon fontIcon="check"></mat-icon>
+            {{ formBuscaService.getDescricaoPassageiros() }}</button
+          >}
+        </mat-chip-set>
+
+        <button type="button" mat-icon-button (click)="formBuscaService.openDialog()">
+          <mat-icon>menu</mat-icon>
+        </button>
       </div>
       <div class="flex-container">
         <app-dropdown-uf
@@ -39,7 +43,7 @@
           [control]="formBuscaService.obterControle('origem')"
         />
 
-        <button mat-icon-button>
+        <button type="button" mat-icon-button>
           <mat-icon>sync_alt</mat-icon>
         </button>
 
@@ -49,25 +53,18 @@
           [control]="formBuscaService.obterControle('destino')"
         />
 
-        <mat-form-field class="input-container" appearance="outline">
-          <mat-label>Data de ida</mat-label>
-          <input matInput [matDatepicker]="ida" />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="ida"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #ida></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field class="input-container" appearance="outline">
-          <mat-label>Data da volta</mat-label>
-          <input matInput [matDatepicker]="volta" />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="volta"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #volta></mat-datepicker>
-        </mat-form-field>
-        <button type="submit" mat-flat-button>Buscar</button>
+        <app-form-date
+        titulo="Data de Ida"
+        dadosTitulo="ida"
+        selecao="dateIda"
+        />
+
+        <app-form-date
+        titulo="Data da volta"
+        dadosTitulo="volta"
+        selecao="dateVolta"
+        />
+        <button type="submit" [disabled]="!formBuscaService.formBusca.valid" mat-flat-button>Buscar</button>
       </div>
     </form>
   </app-card>
