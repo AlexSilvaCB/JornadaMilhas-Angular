@@ -21,7 +21,6 @@ import { UnidadeFederativa } from '../../../core/types/types';
     MatAutocompleteModule,
     ReactiveFormsModule,
     AsyncPipe,
-    JsonPipe,
   ],
   templateUrl: './dropdown-uf.component.html',
   styleUrl: './dropdown-uf.component.scss',

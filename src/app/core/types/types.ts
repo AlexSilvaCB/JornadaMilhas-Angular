@@ -18,3 +18,8 @@ export interface Depoimentos{
   avatar:string
 }
 
+export interface ILogin{
+  email:string,
+  senha:string
+}
+

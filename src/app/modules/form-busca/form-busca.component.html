@@ -13,7 +13,9 @@
 
         <mat-chip-set aria-label="Seleção de Passagens">
           @if(formBuscaService.formBusca.value.tipo == ''){
-          <button type="button" mat-stroked-button style="color: black">Econômica</button>
+          <button type="button" mat-stroked-button style="color: black">
+            Econômica
+          </button>
           }@else {
           <button type="button" class="btnselecao" mat-flat-button>
             <mat-icon fontIcon="check"></mat-icon>
@@ -24,7 +26,9 @@
 
         <mat-chip-set aria-label="Seleção de Passageiros">
           @if(formBuscaService.formBusca.value.adultos == 0){
-          <button type="button" mat-stroked-button style="color: black">Passageiro(s)</button>
+          <button type="button" mat-stroked-button style="color: black">
+            Passageiro(s)
+          </button>
           }@else {
           <button type="button" class="btnselecao" mat-flat-button>
             <mat-icon fontIcon="check"></mat-icon>
@@ -32,7 +36,11 @@
           >}
         </mat-chip-set>
 
-        <button type="button" mat-icon-button (click)="formBuscaService.openDialog()">
+        <button
+          type="button"
+          mat-icon-button
+          (click)="formBuscaService.openDialog()"
+        >
           <mat-icon>menu</mat-icon>
         </button>
       </div>
@@ -54,17 +62,23 @@
         />
 
         <app-form-date
-        titulo="Data de Ida"
-        dadosTitulo="ida"
-        selecao="dateIda"
+          titulo="Data de Ida"
+          dadosTitulo="ida"
+          selecao="dateIda"
         />
 
         <app-form-date
-        titulo="Data da volta"
-        dadosTitulo="volta"
-        selecao="dateVolta"
+          titulo="Data da volta"
+          dadosTitulo="volta"
+          selecao="dateVolta"
         />
-        <button type="submit" [disabled]="!formBuscaService.formBusca.valid" mat-flat-button>Buscar</button>
+        <button
+          type="submit"
+          [disabled]="!formBuscaService.formBusca.valid"
+          mat-flat-button
+        >
+          Buscar
+        </button>
       </div>
     </form>
   </app-card>

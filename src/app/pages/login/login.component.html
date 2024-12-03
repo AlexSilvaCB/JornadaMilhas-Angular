@@ -1,0 +1,70 @@
+<app-header />
+<app-banner [srcSignal]="srcLogin" [alt]="altLogin" />
+<section class="login-component">
+  <mat-card class="login">
+    <div class="image-container">
+      <img
+        src="imagens/simbolo-bussola.png"
+        alt="Símbolo de uma bússola laranja"
+      />
+    </div>
+    <div class="form-container">
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
+      <form [formGroup]="formLogin">
+        <mat-card-content>
+          <mat-form-field appearance="outline">
+            <mat-label>E-mail</mat-label>
+            <input
+              matInput
+              type="email"
+              placeholder="Digite seu e-mail"
+              formControlName="email"
+            />
+            <mat-icon matSuffix>mail</mat-icon>
+            @if(formLogin.get('email')?.hasError('pattern')){
+            <mat-error>Insira um email válido</mat-error>
+            }
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input
+              matInput
+              type="password"
+              placeholder="Digite sua senha"
+              formControlName="senha"
+            />
+            @if(formLogin.get('senha')?.invalid){
+              <mat-icon matSuffix>lock</mat-icon>
+            }@else {
+              <mat-icon matSuffix>lock_open</mat-icon>
+            }
+
+            @if (formLogin.get('senha')?.hasError('minlength')) {
+            <mat-error> Senha Min 6 caracteres </mat-error>
+            }@else if (formLogin.get('senha')?.hasError('maxlength')) {
+            <mat-error> Senha Max 6 caracteres </mat-error>
+            }
+          </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions>
+          <button
+            mat-flat-button
+            (click)="login()"
+            [disabled]="formLogin.invalid"
+          >
+            ACESSAR MINHA CONTA
+          </button>
+        </mat-card-actions>
+        <p>
+          Ainda não possui conta?
+          <a>
+            <strong><u>Clique aqui para se cadastrar!</u></strong>
+          </a>
+        </p>
+      </form>
+    </div>
+  </mat-card>
+</section>
+<app-footer />
