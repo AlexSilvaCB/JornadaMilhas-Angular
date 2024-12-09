@@ -49,6 +49,7 @@
           [label]="'Origem'"
           [iconePrefix]="'flight_takeoff'"
           [control]="formBuscaService.obterControle('origem')"
+          [errorValid]="false"
         />
 
         <button type="button" mat-icon-button>
@@ -64,13 +65,16 @@
         <app-form-date
           titulo="Data de Ida"
           dadosTitulo="ida"
-          selecao="dateIda"
+          [selecao]="'dateIda'"
+          [errorForm]="errorForm"
+          (formDateValue)="insertValueFormDate($event, 'dateIda')"
         />
 
         <app-form-date
           titulo="Data da volta"
           dadosTitulo="volta"
           selecao="dateVolta"
+          (formDateValue)="insertValueFormDate($event, 'dateVolta')"
         />
         <button
           type="submit"

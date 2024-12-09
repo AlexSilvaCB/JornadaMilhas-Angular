@@ -20,8 +20,6 @@ export class FormBuscaService {
 
   inputListValidator: UnidadeFederativa[] = [];
 
-  valuePessoa: number = 0;
-
   formBusca = this.#fb.group({
     formaViagem: ['', [Validators.required]],
     origem: ['', [Validators.required, this.estadoValidator()]],

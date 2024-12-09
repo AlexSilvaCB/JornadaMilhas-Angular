@@ -25,4 +25,7 @@ import { FormBuscaComponent } from '../../modules/form-busca/form-busca.componen
 export class PrincipalJornadaComponent {
   protected srcHome: string = 'imagens/banner-homepage.png';
   protected altHome: string = 'Banner Jornada Milha';
+
+  protected srcBannerRodape: string = 'imagens/banner-homepage-rodape.png'
+  protected altBannerRodape: string = 'Banner rodapé'
 }

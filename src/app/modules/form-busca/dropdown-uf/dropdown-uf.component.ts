@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, WritableSignal } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -32,6 +32,7 @@ export class DropdownUfComponent implements OnInit {
   @Input() label: string = '';
   @Input() iconePrefix: string = '';
   @Input() control!: FormControl;
+  @Input() errorValid: boolean | undefined = false
 
   protected options: UnidadeFederativa[] = [];
   protected filteredOptions!: Observable<UnidadeFederativa[]>;
@@ -65,4 +66,5 @@ export class DropdownUfComponent implements OnInit {
       map((value) => this._filter(value || ''))
     );
   }
+
 }

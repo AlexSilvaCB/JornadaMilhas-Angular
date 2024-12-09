@@ -14,9 +14,7 @@
     <mat-option [value]="option.nome">{{ option.nome }}</mat-option>
     }
   </mat-autocomplete>
-  @if ( formBuscaService.formBusca.get(label.toLocaleLowerCase())?.value != '' &&
-  formBuscaService.formBusca.get(label.toLocaleLowerCase())?.hasError('estadoInvalido')
-  ) {
+  @if (control.value != '' && control.hasError('estadoInvalido')) {
   <mat-hint>Escolha um estado do Brasil</mat-hint>
   }
 </mat-form-field>

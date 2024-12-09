@@ -1,0 +1,198 @@
+<app-container>
+  <mat-card>
+    <form [formGroup]="formBase">
+      <mat-card-header>
+        <mat-card-title>Crie sua conta</mat-card-title>
+      </mat-card-header>
+      @if(perfilComponent){
+      <section>
+        <div class="acoesPerfil">
+          <h2>Dados pessoais</h2>
+          <button mat-stroked-button color="primary">
+            <mat-icon>logout</mat-icon>
+            DESLOGAR
+          </button>
+        </div>
+      </section>
+    }
+
+      <mat-card-content>
+        <div class="grid-container">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Nome Completo</mat-label>
+            <input
+              matInput
+              type="text"
+              placeholder="Digite seu nome"
+              formControlName="nome"
+            />
+            <mat-icon matSuffix>edit</mat-icon>
+          </mat-form-field>
+
+          <div class="grid-itemLeft">
+            <app-form-date
+              titulo="Data de nascimento"
+              dadosTitulo="nascimento"
+              selecao="nascimento"
+              [errorForm]="errorForm"
+              (formDateValue)="insertValueFormDate($event, 'nascimento')"
+            />
+
+            <mat-form-field appearance="outline">
+              <mat-label>CPF</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Digite seu CPF"
+                formControlName="cpf"
+              />
+              <mat-icon matSuffix>edit</mat-icon>
+              @if(formBase.get('cpf')?.invalid){
+              <mat-error>CPF Inválido.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Cidade</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="+55"
+                formControlName="cidade"
+              />
+              <mat-icon matSuffix>home</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="grid-item">
+            <div class="radio-group">
+              <label>Gênero</label>
+              <mat-radio-group formControlName="genero">
+                <mat-radio-button value="Feminino">Feminino</mat-radio-button>
+                <mat-radio-button value="Masculino">Masculino</mat-radio-button>
+                <mat-radio-button value="outro">
+                  Prefiro não informar
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Telefone</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="+55"
+                formControlName="telefone"
+              />
+              <mat-icon matSuffix>call</mat-icon>
+              @if(formBase.get('telefone')?.invalid){
+              <mat-error>Número com ddd sem espaço ou hífen</mat-error>
+              }
+            </mat-form-field>
+
+            <app-dropdown-uf
+              formGroupName="estado"
+              [label]="'Estado'"
+              [iconePrefix]="'public'"
+              [control]="obterControleBase('nome')"
+            ></app-dropdown-uf>
+          </div>
+        </div>
+      </mat-card-content>
+
+      @if(perfilComponent){
+      <mat-divider></mat-divider>
+      <div class="acessoPerfil">
+        <h2>Dados de acesso</h2>
+      </div>
+    }
+    
+      <mat-card-content>
+        <div class="grid-container">
+          <div class="grid-item">
+            <mat-form-field appearance="outline">
+              <mat-label>E-mail</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Digite seu email"
+                formControlName="email"
+              />
+              <mat-icon matSuffix>mail</mat-icon>
+              @if(formBase.get('email')?.invalid){
+              <mat-error>Formato de email inválido</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Senha</mat-label>
+              <input
+                matInput
+                type="password"
+                placeholder="digite sua senha"
+                formControlName="senha"
+              />
+              <mat-icon matSuffix>lock</mat-icon>
+              @if(formBase.get('senha')?.invalid){
+              <mat-error>Senha deve ter max e min 3 caracteres</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="grid-item">
+            <mat-form-field appearance="outline">
+              <mat-label>Confirmar email</mat-label>
+              <input
+                matInput
+                type="text"
+                placeholder="Digite seu email novamente"
+                formControlName="confirmarEmail"
+              />
+              <mat-icon matSuffix>mail</mat-icon>
+              @if(formBase.get('confirmarEmail')?.invalid){
+              <mat-error>Formato de email inválido</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Confirmar senha</mat-label>
+              <input
+                matInput
+                type="password"
+                placeholder="Repita sua senha"
+                formControlName="confirmarSenha"
+              />
+              <mat-icon matSuffix>lock</mat-icon>
+              @if(formBase.get('confirmarSenha')?.invalid){
+              <mat-error>Senha deve ter max e min 3 caracteres</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-checkbox
+          formControlName="aceitarTermos"
+          color="primary"
+          class="full-width"
+          >Li e aceito os termos e condições deste cadastro *</mat-checkbox
+        >
+        @if(formBase.get('aceitarTermos')?.invalid &&
+        formBase.get('aceitarTermos')?.dirty){
+        <mat-error>
+          <small
+            >Você precisa aceitar os termos e condições para efetuar o
+            cadastro</small
+          >
+        </mat-error>
+        }
+        <p>
+          <small>Campos com * são obrigatórios.</small>
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions class="full-width">
+        <button mat-flat-button [disabled]="formBase.invalid">CADASTRAR</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</app-container>

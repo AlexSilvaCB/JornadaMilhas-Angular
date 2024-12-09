@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, OnChanges, signal, SimpleChanges } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -33,8 +33,22 @@ import { FormDateComponent } from './form-date/form-date.component';
   templateUrl: './form-busca.component.html',
   styleUrl: './form-busca.component.scss',
 })
-export class FormBuscaComponent {
+export class FormBuscaComponent{
   protected formBuscaService = inject(FormBuscaService);
+  protected errorForm: boolean | undefined = false
+
+  constructor(){
+  }
+
+  insertValueFormDate(value:string, tipo: string){
+    if(tipo === 'dateIda'){
+      this.formBuscaService.formBusca.patchValue({dateIda:value})
+      }else{
+        this.formBuscaService.formBusca.patchValue({dateVolta:value})
+      }
+
+      this.errorForm = this.formBuscaService.formBusca.get(tipo)?.hasError('pattern')
+  }
 
   buscar() {
     console.log(this.formBuscaService.formBusca.value);

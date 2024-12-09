@@ -1,9 +1,11 @@
 import {
   Component,
   computed,
+  EventEmitter,
   inject,
   Input,
   OnInit,
+  Output,
   signal,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -36,8 +38,9 @@ export class FormDateComponent implements OnInit {
 
   @Input() titulo: string = '';
   @Input() dadosTitulo: any;
-  @Input() selecao: string = ''
-  @Input() controlData!: FormControl
+  @Input() selecao: string = '';
+  @Input() errorForm: boolean | undefined = false
+  @Output() formDateValue =  new EventEmitter<string>();
 
   private readonly _adapter =
     inject<DateAdapter<unknown, unknown>>(DateAdapter);
@@ -58,12 +61,10 @@ export class FormDateComponent implements OnInit {
     this._adapter.setLocale(this._locale());
   }
 
-  InputViagemData(value: string, tipo:string){
-    if(tipo === 'dateIda'){
-    this.formBuscaService.formBusca.patchValue({dateIda:value})
-    }else{
-      this.formBuscaService.formBusca.patchValue({dateVolta:value})
-    }
+  InputData(value: string){
+    this.formDateValue.emit(value)
   }
+
+
 
 }
