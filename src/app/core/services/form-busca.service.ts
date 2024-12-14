@@ -22,8 +22,8 @@ export class FormBuscaService {
 
   formBusca = this.#fb.group({
     formaViagem: ['', [Validators.required]],
-    origem: ['', [Validators.required, this.estadoValidator()]],
-    destino: ['', [Validators.required, this.estadoValidator()]],
+    origem: [null, [Validators.required, this.estadoValidator()]],
+    destino: [null, [Validators.required, this.estadoValidator()]],
     tipo: ['', [Validators.required]],
     adultos: [0, [Validators.required]],
     criancas: [0],
@@ -92,7 +92,7 @@ export class FormBuscaService {
   estadoValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const estados: UnidadeFederativa[] = this.inputListValidator;
-      const isValid = estados.some((estado) => estado.nome === control.value);
+      const isValid = estados.some((estado) => estado === control.value);
       return isValid ? null : { estadoInvalido: { value: control.value } };
     };
   }

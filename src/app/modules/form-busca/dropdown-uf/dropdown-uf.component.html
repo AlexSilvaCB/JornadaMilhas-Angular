@@ -9,12 +9,12 @@
     (focus)="focusI()"
   />
   <mat-icon matSuffix>search</mat-icon>
-  <mat-autocomplete #auto="matAutocomplete">
+  <mat-autocomplete [displayWith]="displayFn" autoActiveFirstOption #auto="matAutocomplete">
     @for (option of filteredOptions | async; track option) {
-    <mat-option [value]="option.nome">{{ option.nome }}</mat-option>
+    <mat-option [value]="option">{{ option.nome }}</mat-option>
     }
   </mat-autocomplete>
-  @if (control.value != '' && control.hasError('estadoInvalido')) {
+  @if (control.value != null && control.hasError('estadoInvalido')) {
   <mat-hint>Escolha um estado do Brasil</mat-hint>
   }
 </mat-form-field>

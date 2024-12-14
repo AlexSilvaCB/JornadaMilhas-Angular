@@ -91,11 +91,11 @@
             </mat-form-field>
 
             <app-dropdown-uf
-              formGroupName="estado"
               [label]="'Estado'"
               [iconePrefix]="'public'"
-              [control]="obterControleBase('nome')"
+              [control]="estadoControl"
             ></app-dropdown-uf>
+            <p>{{formBase.value.estado| json}}</p>
           </div>
         </div>
       </mat-card-content>
@@ -106,7 +106,7 @@
         <h2>Dados de acesso</h2>
       </div>
     }
-    
+
       <mat-card-content>
         <div class="grid-container">
           <div class="grid-item">
@@ -134,7 +134,7 @@
               />
               <mat-icon matSuffix>lock</mat-icon>
               @if(formBase.get('senha')?.invalid){
-              <mat-error>Senha deve ter max e min 3 caracteres</mat-error>
+              <mat-error>Senha deve ter no min 3 caracteres</mat-error>
               }
             </mat-form-field>
           </div>
@@ -149,9 +149,9 @@
                 formControlName="confirmarEmail"
               />
               <mat-icon matSuffix>mail</mat-icon>
-              @if(formBase.get('confirmarEmail')?.invalid){
-              <mat-error>Formato de email inválido</mat-error>
-              }
+              @if(formBase.get('confirmarEmail')?.hasError('passwordConfirmation')){
+                <mat-error>E-mails não coincidem</mat-error>
+                }
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -163,8 +163,8 @@
                 formControlName="confirmarSenha"
               />
               <mat-icon matSuffix>lock</mat-icon>
-              @if(formBase.get('confirmarSenha')?.invalid){
-              <mat-error>Senha deve ter max e min 3 caracteres</mat-error>
+              @if(formBase.get('confirmarSenha')?.hasError('passwordConfirmation')){
+              <mat-error>Confirmação de senha deve ser igual a Senha</mat-error>
               }
             </mat-form-field>
           </div>
@@ -191,7 +191,7 @@
       </mat-card-content>
 
       <mat-card-actions class="full-width">
-        <button mat-flat-button [disabled]="formBase.invalid">CADASTRAR</button>
+        <button mat-flat-button [disabled]="formBase.invalid" (click)="sendCadastro()">CADASTRAR</button>
       </mat-card-actions>
     </form>
   </mat-card>

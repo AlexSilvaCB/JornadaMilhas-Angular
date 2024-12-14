@@ -21,6 +21,7 @@ import { UnidadeFederativa } from '../../../core/types/types';
     MatAutocompleteModule,
     ReactiveFormsModule,
     AsyncPipe,
+    JsonPipe,
   ],
   templateUrl: './dropdown-uf.component.html',
   styleUrl: './dropdown-uf.component.scss',
@@ -34,8 +35,8 @@ export class DropdownUfComponent implements OnInit {
   @Input() control!: FormControl;
   @Input() errorValid: boolean | undefined = false
 
-  protected options: UnidadeFederativa[] = [];
   protected filteredOptions!: Observable<UnidadeFederativa[]>;
+  protected options: UnidadeFederativa[] = [];
 
   ngOnInit() {
     this.unidFederativaService.listar().subscribe({
@@ -52,12 +53,17 @@ export class DropdownUfComponent implements OnInit {
     });
   }
 
-  private _filter(value: string): UnidadeFederativa[] {
-    const filterValue = value.toLowerCase();
+  private _filter(value: string | UnidadeFederativa): UnidadeFederativa[] {
+    const nomeUf = typeof value === 'string' ? value : value?.nome;
+    const valorFiltrado = nomeUf?.toLowerCase();
+    const result = this.options.filter(
+      estado => estado.nome.toLowerCase().includes(valorFiltrado)
+    )
+    return result
+  }
 
-    return this.options.filter((option) =>
-      option.nome.toLocaleLowerCase().includes(filterValue)
-    );
+  displayFn(estado: UnidadeFederativa): string {
+    return estado && estado.nome ? estado.nome : '';
   }
 
   focusI() {

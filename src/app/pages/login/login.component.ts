@@ -36,7 +36,7 @@ export class LoginComponent {
   protected altLogin: string = 'Banner da tela de login';
 
   #loginService = inject(LoginService)
-  #router!:Router
+  #router = inject(Router)
   #fbLogin = inject(NonNullableFormBuilder);
 
   private _snackBar = inject(MatSnackBar);
