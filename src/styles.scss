@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+ .msgDefault {
+     --mdc-snackbar-container-color: white;
+     --mdc-snackbar-supporting-text-color: black;
+     --mat-snack-bar-button-color: #005cbb;
+ }
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

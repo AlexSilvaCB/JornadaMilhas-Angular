@@ -57,7 +57,6 @@
               <input
                 matInput
                 type="text"
-                placeholder="+55"
                 formControlName="cidade"
               />
               <mat-icon matSuffix>home</mat-icon>
@@ -95,7 +94,6 @@
               [iconePrefix]="'public'"
               [control]="estadoControl"
             ></app-dropdown-uf>
-            <p>{{formBase.value.estado| json}}</p>
           </div>
         </div>
       </mat-card-content>
@@ -191,7 +189,7 @@
       </mat-card-content>
 
       <mat-card-actions class="full-width">
-        <button mat-flat-button [disabled]="formBase.invalid" (click)="sendCadastro()">CADASTRAR</button>
+        <button type="button" mat-flat-button [disabled]="formBase.invalid" (click)="executarAcao()">CADASTRAR</button>
       </mat-card-actions>
     </form>
   </mat-card>

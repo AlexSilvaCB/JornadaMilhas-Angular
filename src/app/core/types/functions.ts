@@ -1,4 +1,5 @@
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms'
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms'
+import { PessoaUsuaria } from './types';
 
 export function cpfValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -55,6 +56,25 @@ export function cpfValidator(): ValidatorFn {
         }
         return null;
       };
+    }
+
+    export function mapFormData(formValue: any): PessoaUsuaria {
+      const fieldsToInclude: Array<keyof PessoaUsuaria> = [
+        'nome',
+        'nascimento',
+        'cpf',
+        'telefone',
+        'email',
+        'senha',
+        'genero',
+        'cidade',
+        'estado',
+      ];
+
+      return fieldsToInclude.reduce((obj, key) => {
+        obj[key] = formValue[key];
+        return obj;
+      }, {} as PessoaUsuaria);
     }
 
 

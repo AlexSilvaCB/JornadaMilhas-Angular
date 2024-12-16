@@ -1,4 +1,11 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormControl,
   FormsModule,
@@ -17,12 +24,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { JsonPipe } from '@angular/common';
 import { DropdownUfComponent } from '../form-busca/dropdown-uf/dropdown-uf.component';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { FormBuscaService } from '../../core/services/form-busca.service';
 import { ContainerComponent } from '../container/container.component';
 import { cpfValidator, formConfirmation } from '../../core/types/functions';
+import { UnidadeFederativa } from '../../core/types/types';
 import { FormularioService } from '../../core/services/formulario.service';
-import { PessoaUsuaria, UnidadeFederativa } from '../../core/types/types';
 
 @Component({
   selector: 'app-form-base',
@@ -46,21 +52,25 @@ import { PessoaUsuaria, UnidadeFederativa } from '../../core/types/types';
   templateUrl: './form-base.component.html',
   styleUrl: './form-base.component.scss',
 })
-export class FormBaseComponent {
-
-  #fb = inject(NonNullableFormBuilder);
-  formBuscaService = inject(FormBuscaService);
-  formularioService = inject(FormularioService);
-  private _snackBar = inject(MatSnackBar);
-
-  #horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  #verticalPosition: MatSnackBarVerticalPosition = 'top';
-  #durationInSeconds = 5;
-
-  estadoControl = new FormControl<UnidadeFederativa | null>(null, [Validators.required, this.formBuscaService.estadoValidator()]);
+export class FormBaseComponent implements OnInit{
 
   @Input() perfilComponent!: boolean;
+  @Output() formBaseOutput: EventEmitter<any> = new EventEmitter<any>();
+
+  #fb = inject(NonNullableFormBuilder);
+  #formBuscaService = inject(FormBuscaService);
+  #formularioService = inject(FormularioService);
+
   protected errorForm: boolean | undefined = false;
+
+  protected estadoControl = new FormControl<UnidadeFederativa | null>(null, [
+    Validators.required,
+    this.#formBuscaService.estadoValidator(),
+  ]);
+
+  ngOnInit(): void {
+    this.#formularioService.setCadastro(this.formBase)
+  }
 
   protected formBase = this.#fb.group({
     nome: ['', [Validators.required]],
@@ -91,12 +101,11 @@ export class FormBaseComponent {
     senha: ['', [Validators.required, Validators.minLength(3)]],
     genero: ['outro', [Validators.required]],
     cidade: ['', [Validators.required]],
-    estado:this.estadoControl,
+    estado: this.estadoControl,
     confirmarEmail: [null, [Validators.required, formConfirmation('email')]],
     confirmarSenha: [null, [Validators.required, formConfirmation('senha')]],
     aceitarTermos: [null, [Validators.requiredTrue]],
   });
-
 
   insertValueFormDate(value: string, tipo: string) {
     if (tipo === 'nascimento') {
@@ -104,55 +113,8 @@ export class FormBaseComponent {
     }
   }
 
-  sendCadastro() {
-    const formatada:PessoaUsuaria = this.mapFormData(this.formBase.value);
-    this.formularioService.cadastrar(formatada).subscribe({
-      next:(value)=>{
-        this.okSnackBar(1);
-      },
-      error:(err)=>{
-        console.log(err)
-        this.okSnackBar(2)
-      }
-    })
-    console.log(formatada);
-  }
-
-  mapFormData(formValue: any): PessoaUsuaria {
-    const fieldsToInclude: Array<keyof PessoaUsuaria> = [
-      'nome',
-      'nascimento',
-      'cpf',
-      'telefone',
-      'email',
-      'senha',
-      'genero',
-      'cidade',
-      'estado',
-    ];
-
-    return fieldsToInclude.reduce((obj, key) => {
-      obj[key] = formValue[key];
-      return obj;
-    }, {} as PessoaUsuaria);
-  }
-
-  okSnackBar(returnForm: number) {
-    if(returnForm === 1){
-      this._snackBar.open('Cadastro realizado com sucesso!!', 'Fechar', {
-        horizontalPosition: this.#horizontalPosition,
-        verticalPosition: this.#verticalPosition,
-        duration: this.#durationInSeconds * 1000,
-      });
-    }
-
-    if(returnForm === 2){
-      this._snackBar.open('Não foi possivel realizar o cadastro!!', 'Fechar', {
-        horizontalPosition: this.#horizontalPosition,
-        verticalPosition: this.#verticalPosition,
-        duration: this.#durationInSeconds * 1000,
-      });
-    }
+  executarAcao() {
+    this.formBaseOutput.emit();
   }
 
   //substituido por estadoControl
@@ -163,6 +125,4 @@ export class FormBaseComponent {
     }
     return control as FormControl;
   }
-
-
 }

@@ -35,4 +35,8 @@ export interface PessoaUsuaria{
   estado:UnidadeFederativa
 }
 
+export interface AuthResponse{
+  access_token: string
+}
+
 

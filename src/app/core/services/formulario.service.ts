@@ -1,24 +1,18 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { PessoaUsuaria } from '../types/types';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormularioService {
 
-  #htpp = inject(HttpClient)
-  #apiUrl = environment.apiUrl
+  cadastroForm: FormGroup | null = null;
 
-  constructor() { }
+  getCadastro(): FormGroup | null{
+    return this.cadastroForm;
+  }
 
-cadastrar(pessoaUsuaria: PessoaUsuaria):Observable<PessoaUsuaria>{
-  return this.#htpp.post<PessoaUsuaria>(`${this.#apiUrl}/auth/cadastro`, pessoaUsuaria).pipe(
-    shareReplay(),
-    tap((res)=>(res))
-  )
-}
-
+  setCadastro(form: FormGroup) {
+    this.cadastroForm = form;
+  }
 }
