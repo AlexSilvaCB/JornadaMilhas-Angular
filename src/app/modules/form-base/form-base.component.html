@@ -2,19 +2,19 @@
   <mat-card>
     <form [formGroup]="formBase">
       <mat-card-header>
-        <mat-card-title>Crie sua conta</mat-card-title>
+        <mat-card-title>{{ titulo }}</mat-card-title>
       </mat-card-header>
       @if(perfilComponent){
       <section>
         <div class="acoesPerfil">
           <h2>Dados pessoais</h2>
-          <button mat-stroked-button color="primary">
+          <button mat-stroked-button (click)="deslogar()" color="primary">
             <mat-icon>logout</mat-icon>
             DESLOGAR
           </button>
         </div>
       </section>
-    }
+      }
 
       <mat-card-content>
         <div class="grid-container">
@@ -37,7 +37,7 @@
               [errorForm]="errorForm"
               (formDateValue)="insertValueFormDate($event, 'nascimento')"
             />
-
+              <p>{{ formBase.value.nascimento }}</p>
             <mat-form-field appearance="outline">
               <mat-label>CPF</mat-label>
               <input
@@ -54,11 +54,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Cidade</mat-label>
-              <input
-                matInput
-                type="text"
-                formControlName="cidade"
-              />
+              <input matInput type="text" formControlName="cidade" />
               <mat-icon matSuffix>home</mat-icon>
             </mat-form-field>
           </div>
@@ -99,11 +95,13 @@
       </mat-card-content>
 
       @if(perfilComponent){
+
       <mat-divider></mat-divider>
+
       <div class="acessoPerfil">
         <h2>Dados de acesso</h2>
       </div>
-    }
+      }
 
       <mat-card-content>
         <div class="grid-container">
@@ -148,8 +146,8 @@
               />
               <mat-icon matSuffix>mail</mat-icon>
               @if(formBase.get('confirmarEmail')?.hasError('passwordConfirmation')){
-                <mat-error>E-mails não coincidem</mat-error>
-                }
+              <mat-error>E-mails não coincidem</mat-error>
+              }
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -168,6 +166,7 @@
           </div>
         </div>
 
+        @if(!perfilComponent){
         <mat-checkbox
           formControlName="aceitarTermos"
           color="primary"
@@ -183,13 +182,23 @@
           >
         </mat-error>
         }
+
         <p>
           <small>Campos com * são obrigatórios.</small>
         </p>
+        }
       </mat-card-content>
 
       <mat-card-actions class="full-width">
-        <button type="button" mat-flat-button [disabled]="formBase.invalid" (click)="executarAcao()">CADASTRAR</button>
+        <button
+          type="button"
+          mat-flat-button
+          [class.perfil-button]="perfilComponent"
+          [disabled]="formBase.invalid"
+          (click)="executarAcao()"
+        >
+          {{ textoBotao }}
+        </button>
       </mat-card-actions>
     </form>
   </mat-card>

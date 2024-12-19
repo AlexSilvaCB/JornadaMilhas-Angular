@@ -8,7 +8,7 @@ import {
   Output,
   signal,
 } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
@@ -34,7 +34,6 @@ import { FormBuscaService } from '../../../core/services/form-busca.service';
   styleUrl: './form-date.component.scss',
 })
 export class FormDateComponent implements OnInit {
-  protected formBuscaService = inject(FormBuscaService);
 
   @Input() titulo: string = '';
   @Input() dadosTitulo: any;
@@ -42,8 +41,7 @@ export class FormDateComponent implements OnInit {
   @Input() errorForm: boolean | undefined = false
   @Output() formDateValue =  new EventEmitter<string>();
 
-  private readonly _adapter =
-    inject<DateAdapter<unknown, unknown>>(DateAdapter);
+  private readonly _adapter = inject<DateAdapter<unknown, unknown>>(DateAdapter);
   private readonly _locale = signal(inject<unknown>(MAT_DATE_LOCALE));
   readonly dateFormatString = computed(() => {
     if (this._locale() === 'pt-BR') {

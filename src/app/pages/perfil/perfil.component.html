@@ -1,0 +1,10 @@
+<app-header />
+<app-banner [srcSignal]="srcPerfil" [alt]="altPerfil" />
+<app-form-base
+  [perfilComponent]="true"
+  [titulo]="tituloPerfil + nome"
+  [textoBotao]="textoBotaoPerfil"
+  (sair)="deslogar()"
+  (acaoClique)="atualizar()"
+/>
+<app-footer />

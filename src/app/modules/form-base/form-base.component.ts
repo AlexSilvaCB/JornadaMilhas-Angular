@@ -52,10 +52,12 @@ import { FormularioService } from '../../core/services/formulario.service';
   templateUrl: './form-base.component.html',
   styleUrl: './form-base.component.scss',
 })
-export class FormBaseComponent implements OnInit{
-
+export class FormBaseComponent implements OnInit {
   @Input() perfilComponent!: boolean;
-  @Output() formBaseOutput: EventEmitter<any> = new EventEmitter<any>();
+  @Input() titulo: string = 'Crie sua conta';
+  @Input() textoBotao: string = 'CADASTRAR';
+  @Output() acaoClique: EventEmitter<any> = new EventEmitter<any>();
+  @Output() sair: EventEmitter<any> = new EventEmitter<any>()
 
   #fb = inject(NonNullableFormBuilder);
   #formBuscaService = inject(FormBuscaService);
@@ -67,10 +69,6 @@ export class FormBaseComponent implements OnInit{
     Validators.required,
     this.#formBuscaService.estadoValidator(),
   ]);
-
-  ngOnInit(): void {
-    this.#formularioService.setCadastro(this.formBase)
-  }
 
   protected formBase = this.#fb.group({
     nome: ['', [Validators.required]],
@@ -107,6 +105,19 @@ export class FormBaseComponent implements OnInit{
     aceitarTermos: [null, [Validators.requiredTrue]],
   });
 
+  ngOnInit(): void {
+    if (this.perfilComponent) {
+      this.formBase.get('aceitarTermos')?.setValidators(null);
+    } else {
+      this.formBase
+        .get('aceitarTermos')
+        ?.setValidators([Validators.requiredTrue]);
+    }
+    this.formBase.get('aceitarTermos')?.updateValueAndValidity();
+
+    this.#formularioService.setCadastro(this.formBase);
+  }
+
   insertValueFormDate(value: string, tipo: string) {
     if (tipo === 'nascimento') {
       this.formBase.patchValue({ nascimento: value });
@@ -114,7 +125,11 @@ export class FormBaseComponent implements OnInit{
   }
 
   executarAcao() {
-    this.formBaseOutput.emit();
+    this.acaoClique.emit();
+  }
+
+  deslogar(){
+    this.sair.emit()
   }
 
   //substituido por estadoControl
