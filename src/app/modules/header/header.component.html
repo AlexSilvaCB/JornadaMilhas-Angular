@@ -1,14 +1,21 @@
 <header class="app-header">
-      <app-container>
-        <mat-toolbar>
-          <img src="imagens/logo.png" alt="Logo da aplicação Jornada Milhas">
-          <span class="example-spacer"></span>
-          <button mat-button>Vender Milhas</button>
-          <button mat-button>Sobre</button>
-          <button routerLink="/cadastro" mat-flat-button>CADASTRE-SE</button>
-          <button routerLink="/login" mat-stroked-button>LOGIN</button>
-      </mat-toolbar>
-    </app-container>
+  <app-container>
+    <mat-toolbar>
+      <img src="imagens/logo.png" alt="Logo da aplicação Jornada Milhas" />
+      <span class="example-spacer"></span>
+      <button mat-button>Vender Milhas</button>
+      <button mat-button>Sobre</button>
+      @if(user$ | async; as pessoaUsuaria){
+      <a routerLink="/perfil">
+        <img src="icones/user.png" alt="Ícone da pessoa usuária" />
+      </a>
+      <button mat-stroked-button (click)="logout()">SAIR</button>
 
+      }@else {
+      <button routerLink="/cadastro" mat-flat-button>CADASTRE-SE</button>
+      <button routerLink="/login" mat-stroked-button>LOGIN</button>
 
+      }
+    </mat-toolbar>
+  </app-container>
 </header>

@@ -8,7 +8,7 @@ import {
   Output,
   signal,
 } from '@angular/core';
-import {FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
@@ -17,7 +17,6 @@ import {
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormBuscaService } from '../../../core/services/form-busca.service';
 
 @Component({
   selector: 'app-form-date',
@@ -62,7 +61,4 @@ export class FormDateComponent implements OnInit {
   InputData(value: string){
     this.formDateValue.emit(value)
   }
-
-
-
 }

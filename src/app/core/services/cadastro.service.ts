@@ -22,12 +22,9 @@ export class CadastroService {
       );
   }
 
-  buscarCadastro(token: string): Observable<PessoaUsuaria> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`});
-
+  buscarCadastro(): Observable<PessoaUsuaria> {
     return this.#htpp
-      .get<PessoaUsuaria>(`${this.#apiUrl}/auth/perfil`, { headers })
+      .get<PessoaUsuaria>(`${this.#apiUrl}/auth/perfil`)
       .pipe(
         shareReplay(),
         tap((res) => {
@@ -36,11 +33,9 @@ export class CadastroService {
       );
   }
 
-  editarCadastro(pessoaUsuaria: PessoaUsuaria, token: string): Observable<PessoaUsuaria> {
-    const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
-
+  editarCadastro(pessoaUsuaria: PessoaUsuaria): Observable<PessoaUsuaria> {
     return this.#htpp
-      .patch<PessoaUsuaria>(`${this.#apiUrl}/auth/perfil`, pessoaUsuaria, {headers})
+      .patch<PessoaUsuaria>(`${this.#apiUrl}/auth/perfil`, pessoaUsuaria)
       .pipe(
         shareReplay(),
         tap((res) => res)

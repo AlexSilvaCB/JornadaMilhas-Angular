@@ -41,7 +41,7 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.token = this.#tokenService.retornarToken();
-    this.#cadastroService.buscarCadastro(this.token).subscribe({
+    this.#cadastroService.buscarCadastro().subscribe({
       next:(cadastro)=>{
         this.cadastro = cadastro;
         console.log(cadastro)
@@ -82,7 +82,7 @@ carregarFormulario() {
 
     console.log(dadosAtualizados)
 
-this.#cadastroService.editarCadastro(dadosAtualizados, this.token).subscribe({
+this.#cadastroService.editarCadastro(dadosAtualizados).subscribe({
   next: () => {
       this.openSnackBar(1)
       setTimeout(() => {

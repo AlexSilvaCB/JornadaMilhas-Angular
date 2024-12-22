@@ -1,10 +1,12 @@
 import {
   Component,
+  computed,
   EventEmitter,
   inject,
   Input,
   OnInit,
   Output,
+  signal,
 } from '@angular/core';
 import {
   FormControl,
@@ -13,12 +15,19 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {
+  MatDatepickerModule
+} from '@angular/material/datepicker';
+import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+} from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { FormDateComponent } from '../form-busca/form-date/form-date.component';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -37,14 +46,15 @@ import { FormularioService } from '../../core/services/formulario.service';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDatepickerModule,
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
     MatIconModule,
     MatRadioModule,
     MatDividerModule,
+    MatNativeDateModule,
     MatCheckboxModule,
-    FormDateComponent,
     JsonPipe,
     DropdownUfComponent,
     ContainerComponent,
@@ -57,7 +67,7 @@ export class FormBaseComponent implements OnInit {
   @Input() titulo: string = 'Crie sua conta';
   @Input() textoBotao: string = 'CADASTRAR';
   @Output() acaoClique: EventEmitter<any> = new EventEmitter<any>();
-  @Output() sair: EventEmitter<any> = new EventEmitter<any>()
+  @Output() sair: EventEmitter<any> = new EventEmitter<any>();
 
   #fb = inject(NonNullableFormBuilder);
   #formBuscaService = inject(FormBuscaService);
@@ -72,15 +82,7 @@ export class FormBaseComponent implements OnInit {
 
   protected formBase = this.#fb.group({
     nome: ['', [Validators.required]],
-    nascimento: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(
-          /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
-        ),
-      ],
-    ],
+    nascimento: ['10/01/2010', [Validators.required]],
     cpf: ['', [Validators.required, cpfValidator()]],
     telefone: [
       '',
@@ -106,6 +108,8 @@ export class FormBaseComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.brazil();
+
     if (this.perfilComponent) {
       this.formBase.get('aceitarTermos')?.setValidators(null);
     } else {
@@ -118,18 +122,27 @@ export class FormBaseComponent implements OnInit {
     this.#formularioService.setCadastro(this.formBase);
   }
 
-  insertValueFormDate(value: string, tipo: string) {
-    if (tipo === 'nascimento') {
-      this.formBase.patchValue({ nascimento: value });
+  private readonly _adapter =
+    inject<DateAdapter<unknown, unknown>>(DateAdapter);
+  private readonly _locale = signal(inject<unknown>(MAT_DATE_LOCALE));
+  readonly dateFormatString = computed(() => {
+    if (this._locale() === 'pt-BR') {
+      return 'DD/MM/YYYY';
     }
+    return '';
+  });
+
+  brazil() {
+    this._locale.set('pt-BR');
+    this._adapter.setLocale(this._locale());
   }
 
   executarAcao() {
     this.acaoClique.emit();
   }
 
-  deslogar(){
-    this.sair.emit()
+  deslogar() {
+    this.sair.emit();
   }
 
   //substituido por estadoControl

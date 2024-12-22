@@ -30,14 +30,18 @@
           </mat-form-field>
 
           <div class="grid-itemLeft">
-            <app-form-date
-              titulo="Data de nascimento"
-              dadosTitulo="nascimento"
-              selecao="nascimento"
-              [errorForm]="errorForm"
-              (formDateValue)="insertValueFormDate($event, 'nascimento')"
-            />
-              <p>{{ formBase.value.nascimento }}</p>
+            <mat-form-field appearance="outline">
+              <mat-label>Data de nascimento</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="nascimento"
+            >
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              @if(formBase.get('nascimento')?.invalid){
+                <mat-error>Formato inválido: DD/MM/YYYY</mat-error>
+                }
+            </mat-form-field>
+            <p>{{ formBase.value.nascimento }}</p>
+
             <mat-form-field appearance="outline">
               <mat-label>CPF</mat-label>
               <input

@@ -5,10 +5,7 @@
   #valueInput
   (dateChange)="InputData(valueInput.value)"
   />
-  <mat-datepicker-toggle
-    matIconSuffix
-    [for]="dadosTitulo"
-  ></mat-datepicker-toggle>
+  <mat-datepicker-toggle matIconSuffix [for]="dadosTitulo"></mat-datepicker-toggle>
   <mat-datepicker #dadosTitulo></mat-datepicker>
   @if(errorForm){
     <mat-hint>Formato data error: DD/MM/YYYY</mat-hint>
