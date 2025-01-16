@@ -1,5 +1,7 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms'
-import { PessoaUsuaria } from './types';
+import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms'
+import { PessoaUsuaria, UnidadeFederativa } from './types';
+import { catchError, map, Observable, of } from 'rxjs';
+import { UnidadeFederativaService } from '../services/unidade-federativa.service';
 
 export function cpfValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
@@ -47,6 +49,66 @@ export function cpfValidator(): ValidatorFn {
     return true;
     }
 
+    export function dateValidator(): ValidatorFn {
+      return (control: AbstractControl): { [key: string]: any } | null => {
+
+        if(control.value === null){
+          return null
+        }
+        const inputDate = new Date(control.value).getDay();
+        const currentDate = new Date().getDay();
+
+        if (inputDate < currentDate) {
+          return { 'invalidDate': { value: control.value } };
+        }
+        return null;
+      };
+    }
+
+    export function dateValidatorVolta(dados: string): ValidatorFn {
+      return (control: AbstractControl): { [key: string]: any } | null => {
+
+        if(control.value === null){
+          return null
+        }
+
+        const inputIda = new Date(control.root.get(dados)?.value).getDay()
+        const inputDate = new Date(control.value).getDay();
+        const currentDate = new Date().getDay();
+
+        if (inputDate < currentDate || inputDate <= inputIda) {
+          return { 'invalidDate': { value: control.value } };
+        }
+        return null;
+      };
+    }
+
+
+  export function obterControle(nome: string, form: FormGroup): FormControl {
+        const control = form.get(nome);
+        if (!control) {
+          throw new Error(`FormControl com nome "${nome}" não existe.`);
+        }
+        return control as FormControl;
+      }
+
+  export function estadoValidator(Uf: UnidadeFederativaService): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      const valueUF: UnidadeFederativa | null = control.value;
+      if (valueUF === null) {
+        return of(null);
+      }
+      return Uf.listar().pipe(
+        map((estados) => {
+          const isValid = estados.some((uf) => uf.nome === valueUF.nome);
+          return isValid ? null : { estadoInvalido: true };
+        }),
+        catchError(() => of({ estadoInvalido: true }))
+      );
+    };
+  }
+
+
     export function formConfirmation(dados: string): ValidatorFn {
       return (control: AbstractControl): ValidationErrors | null => {
         const passwordValue = control.value;
@@ -76,5 +138,3 @@ export function cpfValidator(): ValidatorFn {
         return obj;
       }, {} as PessoaUsuaria);
     }
-
-

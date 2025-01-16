@@ -1,15 +1,20 @@
 import { inject, Injectable } from '@angular/core';
 import {
   AbstractControl,
+  AsyncValidatorFn,
   FormControl,
+  FormGroup,
   NonNullableFormBuilder,
-  ValidatorFn,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../modules/modal/modal.component';
 import { MatChipSelectionChange } from '@angular/material/chips';
 import { UnidadeFederativa } from '../types/types';
+import { UnidadeFederativaService } from './unidade-federativa.service';
+import { catchError, map, Observable, of } from 'rxjs';
+import { dateValidator, dateValidatorVolta, estadoValidator } from '../types/functions';
 
 @Injectable({
   providedIn: 'root',
@@ -17,46 +22,41 @@ import { UnidadeFederativa } from '../types/types';
 export class FormBuscaService {
   readonly dialog = inject(MatDialog);
   #fb = inject(NonNullableFormBuilder);
+  #estados$ = inject(UnidadeFederativaService);
 
-  inputListValidator: UnidadeFederativa[] = [];
-
-  formBusca = this.#fb.group({
+  formBusca: FormGroup = this.#fb.group({
     formaViagem: ['', [Validators.required]],
-    origem: [null, [Validators.required, this.estadoValidator()]],
-    destino: [null, [Validators.required, this.estadoValidator()]],
+    origem: [
+      null,
+      {
+        validators: [Validators.required],
+        asyncValidators: [estadoValidator(this.#estados$)],
+      },
+    ],
+    destino: [
+      null,
+      {
+        validators: [Validators.required],
+        asyncValidators: [estadoValidator(this.#estados$)],
+      },
+    ],
     tipo: ['', [Validators.required]],
     adultos: [0, [Validators.required]],
     criancas: [0],
     bebes: [0],
     dateIda: [
-      '',
+      null,
       [
-        Validators.required,
-        Validators.pattern(
-          /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
-        ),
+        Validators.required, dateValidator(),
       ],
     ],
     dateVolta: [
-      '',
+      null,
       [
-        Validators.required,
-        Validators.pattern(
-          /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
-        ),
+        Validators.required, dateValidatorVolta('dateIda'),
       ],
     ],
   });
-
-  constructor() {}
-
-  obterControle(nome: string): FormControl {
-    const control = this.formBusca.get(nome);
-    if (!control) {
-      throw new Error(`FormControl com nome "${nome}" não existe.`);
-    }
-    return control as FormControl;
-  }
 
   alterarTipo(evento: MatChipSelectionChange, tipo: string) {
     if (evento.selected) {
@@ -87,13 +87,5 @@ export class FormBuscaService {
 
   openDialog() {
     this.dialog.open(ModalComponent);
-  }
-
-  estadoValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const estados: UnidadeFederativa[] = this.inputListValidator;
-      const isValid = estados.some((estado) => estado === control.value);
-      return isValid ? null : { estadoInvalido: { value: control.value } };
-    };
   }
 }

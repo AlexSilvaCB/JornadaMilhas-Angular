@@ -12,5 +12,4 @@ export class BannerComponent {
   @Input() alt: string = '';
   //versão 18
   srcSignal = input.required<string>()
-
 }

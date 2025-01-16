@@ -21,6 +21,7 @@ import { PessoaUsuaria } from '../../core/types/types';
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
+
   #userService = inject(UserService);
   #router = inject(Router);
 

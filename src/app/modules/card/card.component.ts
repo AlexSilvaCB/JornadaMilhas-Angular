@@ -9,7 +9,5 @@ import { CommonModule } from '@angular/common';
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
-
   @Input() variant: 'primary' | 'secondary' = 'primary'
-
 }

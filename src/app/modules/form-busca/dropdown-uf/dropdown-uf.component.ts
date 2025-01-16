@@ -1,11 +1,11 @@
-import { Component, inject, Input, OnInit, WritableSignal } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormBuscaService } from '../../../core/services/form-busca.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe} from '@angular/common';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { UnidadeFederativaService } from '../../../core/services/unidade-federativa.service';
@@ -21,7 +21,6 @@ import { UnidadeFederativa } from '../../../core/types/types';
     MatAutocompleteModule,
     ReactiveFormsModule,
     AsyncPipe,
-    JsonPipe,
   ],
   templateUrl: './dropdown-uf.component.html',
   styleUrl: './dropdown-uf.component.scss',
@@ -33,7 +32,7 @@ export class DropdownUfComponent implements OnInit {
   @Input() label: string = '';
   @Input() iconePrefix: string = '';
   @Input() control!: FormControl;
-  @Input() errorValid: boolean | undefined = false
+  @Input() errorValid: boolean | undefined = false;
 
   protected filteredOptions!: Observable<UnidadeFederativa[]>;
   protected options: UnidadeFederativa[] = [];
@@ -48,7 +47,6 @@ export class DropdownUfComponent implements OnInit {
             return 1;
           }
         });
-        this.formBuscaService.inputListValidator = dados;
       },
     });
   }
@@ -56,10 +54,10 @@ export class DropdownUfComponent implements OnInit {
   private _filter(value: string | UnidadeFederativa): UnidadeFederativa[] {
     const nomeUf = typeof value === 'string' ? value : value?.nome;
     const valorFiltrado = nomeUf?.toLowerCase();
-    const result = this.options.filter(
-      estado => estado.nome.toLowerCase().includes(valorFiltrado)
-    )
-    return result
+    const result = this.options.filter((estado) =>
+      estado.nome.toLowerCase().includes(valorFiltrado)
+    );
+    return result;
   }
 
   displayFn(estado: UnidadeFederativa): string {
@@ -72,5 +70,4 @@ export class DropdownUfComponent implements OnInit {
       map((value) => this._filter(value || ''))
     );
   }
-
 }

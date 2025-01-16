@@ -1,6 +1,6 @@
 <app-container>
   <mat-card>
-    <form [formGroup]="formBase">
+    <form [formGroup]="formBaseService.formBase">
       <mat-card-header>
         <mat-card-title>{{ titulo }}</mat-card-title>
       </mat-card-header>
@@ -30,17 +30,13 @@
           </mat-form-field>
 
           <div class="grid-itemLeft">
-            <mat-form-field appearance="outline">
-              <mat-label>Data de nascimento</mat-label>
-              <input matInput [matDatepicker]="picker" formControlName="nascimento"
-            >
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              @if(formBase.get('nascimento')?.invalid){
-                <mat-error>Formato inválido: DD/MM/YYYY</mat-error>
-                }
-            </mat-form-field>
-            <p>{{ formBase.value.nascimento }}</p>
+            <app-form-date
+              titulo="Data de Nascimento"
+              dadosTitulo="nascimento"
+              [selecao]="'nascimento'"
+              [control]="dateNascimento"
+              [formPerfil]="perfilComponent"
+            />
 
             <mat-form-field appearance="outline">
               <mat-label>CPF</mat-label>
@@ -49,9 +45,10 @@
                 type="text"
                 placeholder="Digite seu CPF"
                 formControlName="cpf"
+                readonly="perfilComponent"
               />
               <mat-icon matSuffix>edit</mat-icon>
-              @if(formBase.get('cpf')?.invalid){
+              @if(formBaseService.formBase.get('cpf')?.invalid){
               <mat-error>CPF Inválido.</mat-error>
               }
             </mat-form-field>
@@ -84,7 +81,7 @@
                 formControlName="telefone"
               />
               <mat-icon matSuffix>call</mat-icon>
-              @if(formBase.get('telefone')?.invalid){
+              @if(formBaseService.formBase.get('telefone')?.invalid){
               <mat-error>Número com ddd sem espaço ou hífen</mat-error>
               }
             </mat-form-field>
@@ -92,14 +89,13 @@
             <app-dropdown-uf
               [label]="'Estado'"
               [iconePrefix]="'public'"
-              [control]="estadoControl"
+              [control]="formEstado"
             ></app-dropdown-uf>
           </div>
         </div>
       </mat-card-content>
 
       @if(perfilComponent){
-
       <mat-divider></mat-divider>
 
       <div class="acessoPerfil">
@@ -119,7 +115,7 @@
                 formControlName="email"
               />
               <mat-icon matSuffix>mail</mat-icon>
-              @if(formBase.get('email')?.invalid){
+              @if( formBaseService.formBase.get('email')?.invalid){
               <mat-error>Formato de email inválido</mat-error>
               }
             </mat-form-field>
@@ -133,7 +129,7 @@
                 formControlName="senha"
               />
               <mat-icon matSuffix>lock</mat-icon>
-              @if(formBase.get('senha')?.invalid){
+              @if( formBaseService.formBase.get('senha')?.invalid){
               <mat-error>Senha deve ter no min 3 caracteres</mat-error>
               }
             </mat-form-field>
@@ -149,7 +145,8 @@
                 formControlName="confirmarEmail"
               />
               <mat-icon matSuffix>mail</mat-icon>
-              @if(formBase.get('confirmarEmail')?.hasError('passwordConfirmation')){
+              @if(
+              formBaseService.formBase.get('confirmarEmail')?.hasError('passwordConfirmation')){
               <mat-error>E-mails não coincidem</mat-error>
               }
             </mat-form-field>
@@ -163,7 +160,8 @@
                 formControlName="confirmarSenha"
               />
               <mat-icon matSuffix>lock</mat-icon>
-              @if(formBase.get('confirmarSenha')?.hasError('passwordConfirmation')){
+              @if(
+              formBaseService.formBase.get('confirmarSenha')?.hasError('passwordConfirmation')){
               <mat-error>Confirmação de senha deve ser igual a Senha</mat-error>
               }
             </mat-form-field>
@@ -177,8 +175,8 @@
           class="full-width"
           >Li e aceito os termos e condições deste cadastro *</mat-checkbox
         >
-        @if(formBase.get('aceitarTermos')?.invalid &&
-        formBase.get('aceitarTermos')?.dirty){
+        @if( formBaseService.formBase.get('aceitarTermos')?.invalid &&
+        formBaseService.formBase.get('aceitarTermos')?.dirty){
         <mat-error>
           <small
             >Você precisa aceitar os termos e condições para efetuar o
@@ -198,7 +196,7 @@
           type="button"
           mat-flat-button
           [class.perfil-button]="perfilComponent"
-          [disabled]="formBase.invalid"
+          [disabled]="formBaseService.formBase.invalid"
           (click)="executarAcao()"
         >
           {{ textoBotao }}

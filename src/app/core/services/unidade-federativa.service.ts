@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { catchError, Observable, of, shareReplay} from 'rxjs';
+import { catchError, Observable, of, shareReplay, tap} from 'rxjs';
 import { UnidadeFederativa } from '../types/types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UnidadeFederativaService {
+
   private http = inject(HttpClient);
   private apiUrl: string = environment.apiUrl;
   private cache$?: Observable<UnidadeFederativa[]>;
@@ -17,7 +18,7 @@ export class UnidadeFederativaService {
   listar():Observable<UnidadeFederativa[]>{
     if (!this.cache$) {
       this.cache$ = this.requestEstados$().pipe(
-      shareReplay(1));
+      shareReplay(1)),
       catchError(error => {
         alert("Erro ao buscar estados.")
         return of([] as UnidadeFederativa[])

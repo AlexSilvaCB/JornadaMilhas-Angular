@@ -39,16 +39,16 @@
         <button
           type="button"
           mat-icon-button
-          (click)="formBuscaService.openDialog()"
-        >
+          (click)="formBuscaService.openDialog()">
           <mat-icon>menu</mat-icon>
         </button>
+
       </div>
       <div class="flex-container">
         <app-dropdown-uf
           [label]="'Origem'"
           [iconePrefix]="'flight_takeoff'"
-          [control]="formBuscaService.obterControle('origem')"
+          [control]="obterControleOrigem"
           [errorValid]="false"
         />
 
@@ -59,23 +59,23 @@
         <app-dropdown-uf
           [label]="'Destino'"
           [iconePrefix]="'flight_land'"
-          [control]="formBuscaService.obterControle('destino')"
+          [control]="obterControleDestino"
         />
 
         <app-form-date
           titulo="Data de Ida"
           dadosTitulo="ida"
           [selecao]="'dateIda'"
-          [errorForm]="errorForm"
-          (formDateValue)="insertValueFormDate($event, 'dateIda')"
+          [control]="obterControleDateIda"
         />
 
         <app-form-date
           titulo="Data da volta"
           dadosTitulo="volta"
           selecao="dateVolta"
-          (formDateValue)="insertValueFormDate($event, 'dateVolta')"
+         [control]="obterControleDateVolta"
         />
+
         <button
           type="submit"
           [disabled]="!formBuscaService.formBusca.valid"

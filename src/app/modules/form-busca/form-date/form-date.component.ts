@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import {
   Component,
   computed,
@@ -8,13 +9,13 @@ import {
   Output,
   signal,
 } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MatNativeDateModule,
 } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
@@ -28,17 +29,17 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatInputModule,
     FormsModule,
+    JsonPipe
   ],
   templateUrl: './form-date.component.html',
   styleUrl: './form-date.component.scss',
 })
 export class FormDateComponent implements OnInit {
-
   @Input() titulo: string = '';
   @Input() dadosTitulo: any;
   @Input() selecao: string = '';
-  @Input() errorForm: boolean | undefined = false
-  @Output() formDateValue =  new EventEmitter<string>();
+  @Input() formPerfil: boolean = false;
+  @Input() control!:FormControl;
 
   private readonly _adapter = inject<DateAdapter<unknown, unknown>>(DateAdapter);
   private readonly _locale = signal(inject<unknown>(MAT_DATE_LOCALE));
@@ -58,7 +59,4 @@ export class FormDateComponent implements OnInit {
     this._adapter.setLocale(this._locale());
   }
 
-  InputData(value: string){
-    this.formDateValue.emit(value)
-  }
 }

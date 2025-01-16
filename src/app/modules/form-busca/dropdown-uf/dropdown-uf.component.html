@@ -6,7 +6,7 @@
     matInput
     [formControl]="control"
     [matAutocomplete]="auto"
-    (focus)="focusI()"
+    (click)="focusI()"
   />
   <mat-icon matSuffix>search</mat-icon>
   <mat-autocomplete [displayWith]="displayFn" autoActiveFirstOption #auto="matAutocomplete">

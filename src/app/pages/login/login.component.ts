@@ -18,7 +18,6 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { JsonPipe } from '@angular/common';
 import { LoginService } from '../../core/services/login.service';
 import { Router } from '@angular/router';
 
@@ -69,7 +68,6 @@ export class LoginComponent {
   });
 
   login() {
-    console.log(this.formLogin.getRawValue());
     this.#loginService.autenticar$(this.formLogin.getRawValue()).subscribe({
       next: (value) => {
         this.#router.navigateByUrl('/');
@@ -80,8 +78,8 @@ export class LoginComponent {
     });
   }
 
-  openSnackBar(msg:string, msgCss:string) {
-    this._snackBar.open(msg, "OK", {
+  openSnackBar(msg: string, msgCss: string) {
+    this._snackBar.open(msg, 'OK', {
       duration: this.#durationInSeconds * 1000,
       panelClass: msgCss,
       horizontalPosition: this.#horizontalPosition,

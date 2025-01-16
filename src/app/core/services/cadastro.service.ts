@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { PessoaUsuaria } from '../types/types';
@@ -28,7 +28,6 @@ export class CadastroService {
       .pipe(
         shareReplay(),
         tap((res) => {
-          console.log(res);
         })
       );
   }

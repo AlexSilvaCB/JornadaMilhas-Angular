@@ -1,17 +1,14 @@
 import {
   Component,
-  computed,
   EventEmitter,
   inject,
   Input,
   OnInit,
   Output,
-  signal,
 } from '@angular/core';
 import {
   FormControl,
   FormsModule,
-  NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -19,8 +16,6 @@ import {
   MatDatepickerModule
 } from '@angular/material/datepicker';
 import {
-  DateAdapter,
-  MAT_DATE_LOCALE,
   MatNativeDateModule,
 } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,11 +28,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { JsonPipe } from '@angular/common';
 import { DropdownUfComponent } from '../form-busca/dropdown-uf/dropdown-uf.component';
-import { FormBuscaService } from '../../core/services/form-busca.service';
 import { ContainerComponent } from '../container/container.component';
-import { cpfValidator, formConfirmation } from '../../core/types/functions';
-import { UnidadeFederativa } from '../../core/types/types';
 import { FormularioService } from '../../core/services/formulario.service';
+import { FormBaseService } from '../../core/services/form-base';
+import { obterControle } from '../../core/types/functions';
+import { FormDateComponent } from '../form-busca/form-date/form-date.component';
 
 @Component({
   selector: 'app-form-base',
@@ -46,7 +41,7 @@ import { FormularioService } from '../../core/services/formulario.service';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule,
+   // MatDatepickerModule,
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
@@ -58,83 +53,40 @@ import { FormularioService } from '../../core/services/formulario.service';
     JsonPipe,
     DropdownUfComponent,
     ContainerComponent,
+    FormDateComponent,
   ],
   templateUrl: './form-base.component.html',
   styleUrl: './form-base.component.scss',
 })
 export class FormBaseComponent implements OnInit {
+
   @Input() perfilComponent!: boolean;
   @Input() titulo: string = 'Crie sua conta';
   @Input() textoBotao: string = 'CADASTRAR';
   @Output() acaoClique: EventEmitter<any> = new EventEmitter<any>();
   @Output() sair: EventEmitter<any> = new EventEmitter<any>();
 
-  #fb = inject(NonNullableFormBuilder);
-  #formBuscaService = inject(FormBuscaService);
+  formEstado!:FormControl;
+  dateNascimento!: FormControl
   #formularioService = inject(FormularioService);
-
-  protected errorForm: boolean | undefined = false;
-
-  protected estadoControl = new FormControl<UnidadeFederativa | null>(null, [
-    Validators.required,
-    this.#formBuscaService.estadoValidator(),
-  ]);
-
-  protected formBase = this.#fb.group({
-    nome: ['', [Validators.required]],
-    nascimento: ['10/01/2010', [Validators.required]],
-    cpf: ['', [Validators.required, cpfValidator()]],
-    telefone: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^\(?\d{2}\)? ?(?:[2-8]|9[1-9])\d{3}-?\d{4}$/),
-      ],
-    ],
-    email: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern('^[a-z0-9.+-]+@[a-z0-9.-]+\\.[a-z]{2,}$'),
-      ],
-    ],
-    senha: ['', [Validators.required, Validators.minLength(3)]],
-    genero: ['outro', [Validators.required]],
-    cidade: ['', [Validators.required]],
-    estado: this.estadoControl,
-    confirmarEmail: [null, [Validators.required, formConfirmation('email')]],
-    confirmarSenha: [null, [Validators.required, formConfirmation('senha')]],
-    aceitarTermos: [null, [Validators.requiredTrue]],
-  });
+  //protected errorForm: boolean | undefined = false;
+  formBaseService = inject(FormBaseService)
 
   ngOnInit(): void {
-    this.brazil();
+    this.formEstado = obterControle('estado', this.formBaseService.formBase)
+    this.dateNascimento = obterControle('nascimento', this.formBaseService.formBase)
 
     if (this.perfilComponent) {
-      this.formBase.get('aceitarTermos')?.setValidators(null);
+      this.formBaseService.formBase.get('aceitarTermos')?.setValidators(null);
     } else {
-      this.formBase
+      this.formBaseService.formBase
         .get('aceitarTermos')
         ?.setValidators([Validators.requiredTrue]);
     }
-    this.formBase.get('aceitarTermos')?.updateValueAndValidity();
 
-    this.#formularioService.setCadastro(this.formBase);
-  }
+    this.formBaseService.formBase.get('aceitarTermos')?.updateValueAndValidity();
 
-  private readonly _adapter =
-    inject<DateAdapter<unknown, unknown>>(DateAdapter);
-  private readonly _locale = signal(inject<unknown>(MAT_DATE_LOCALE));
-  readonly dateFormatString = computed(() => {
-    if (this._locale() === 'pt-BR') {
-      return 'DD/MM/YYYY';
-    }
-    return '';
-  });
-
-  brazil() {
-    this._locale.set('pt-BR');
-    this._adapter.setLocale(this._locale());
+    this.#formularioService.setCadastro(this.formBaseService.formBase);
   }
 
   executarAcao() {
@@ -145,12 +97,4 @@ export class FormBaseComponent implements OnInit {
     this.sair.emit();
   }
 
-  //substituido por estadoControl
-  obterControleBase(nome: string): FormControl {
-    const control = this.formBase.get(nome);
-    if (!control) {
-      throw new Error(`FormControl com nome "${nome}" não existe.`);
-    }
-    return control as FormControl;
-  }
 }
