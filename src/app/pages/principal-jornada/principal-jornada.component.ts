@@ -6,6 +6,7 @@ import { FooterComponent } from '../../modules/footer/footer.component';
 import { CardBuscaComponent } from '../../modules/card-busca/card-busca.component';
 import { CardDepoimentoComponent } from '../../modules/card-depoimento/card-depoimento.component';
 import { FormBuscaComponent } from '../../modules/form-busca/form-busca.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-principal-jornada',
@@ -24,10 +25,16 @@ import { FormBuscaComponent } from '../../modules/form-busca/form-busca.componen
 })
 export class PrincipalJornadaComponent {
 
+  #router = inject(Router)
+
   protected srcHome: string = 'imagens/banner-homepage.png';
   protected altHome: string = 'Banner Jornada Milha';
 
   protected srcBannerRodape: string = 'imagens/banner-homepage-rodape.png'
   protected altBannerRodape: string = 'Banner rodapé'
+
+  protected navegarParaBusca(ev: any){
+    this.#router.navigateByUrl('busca')
+  }
 
 }

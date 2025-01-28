@@ -13,9 +13,6 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  MatDatepickerModule
-} from '@angular/material/datepicker';
-import {
   MatNativeDateModule,
 } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,7 +23,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { JsonPipe } from '@angular/common';
 import { DropdownUfComponent } from '../form-busca/dropdown-uf/dropdown-uf.component';
 import { ContainerComponent } from '../container/container.component';
 import { FormularioService } from '../../core/services/formulario.service';
@@ -41,7 +37,6 @@ import { FormDateComponent } from '../form-busca/form-date/form-date.component';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-   // MatDatepickerModule,
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
@@ -50,7 +45,6 @@ import { FormDateComponent } from '../form-busca/form-date/form-date.component';
     MatDividerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    JsonPipe,
     DropdownUfComponent,
     ContainerComponent,
     FormDateComponent,
@@ -69,7 +63,6 @@ export class FormBaseComponent implements OnInit {
   formEstado!:FormControl;
   dateNascimento!: FormControl
   #formularioService = inject(FormularioService);
-  //protected errorForm: boolean | undefined = false;
   formBaseService = inject(FormBaseService)
 
   ngOnInit(): void {

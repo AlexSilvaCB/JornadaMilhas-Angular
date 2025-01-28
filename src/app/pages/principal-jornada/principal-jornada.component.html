@@ -1,11 +1,11 @@
 <app-header />
 <app-banner [srcSignal]="srcHome" [alt]="altHome" />
-<app-form-busca />
+<app-form-busca (realizarBusca)="navegarParaBusca($event)" />
 <article>
   <app-container>
     <h2>Promoções</h2>
     <section>
-      <app-card-busca />
+      <app-card-busca/>
     </section>
     <h2>Depoimentos</h2>
     <section>
@@ -14,5 +14,5 @@
   </app-container>
 </article>
 <app-container />
-<app-banner [srcSignal]="srcBannerRodape" [alt]="altBannerRodape"/>
+<app-banner [srcSignal]="srcBannerRodape" [alt]="altBannerRodape" />
 <app-footer />

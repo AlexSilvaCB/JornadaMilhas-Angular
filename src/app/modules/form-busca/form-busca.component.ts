@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -40,6 +40,7 @@ export class FormBuscaComponent implements OnInit {
   protected obterControleDestino!: FormControl;
   protected obterControleDateIda!: FormControl;
   protected obterControleDateVolta!:FormControl;
+  @Output() realizarBusca = new EventEmitter();
 
   constructor() {}
 
@@ -65,5 +66,7 @@ export class FormBuscaComponent implements OnInit {
 
   buscar() {
     console.log(this.formBuscaService.formBusca.value);
+    const formBuscaValue = this.formBuscaService.formBusca.value
+    this.realizarBusca.emit(formBuscaValue);
   }
 }

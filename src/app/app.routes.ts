@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { CadastroComponent } from './pages/cadastro/cadastro.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { authGuard } from './core/guards/aut.guard';
+import { BuscaComponent } from './pages/busca/busca.component';
 
 export const routes: Routes = [
   {
@@ -23,4 +24,8 @@ export const routes: Routes = [
     component: PerfilComponent,
     canActivate: [authGuard],
   },
+  {
+    path:'busca',
+    component: BuscaComponent,
+    }
 ];
