@@ -1,12 +1,13 @@
-import { Component, computed, Input, Signal, signal } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Passagem } from '../../../core/types/types';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-passagem',
   standalone: true,
-  imports: [MatCardModule, CommonModule],
+  imports: [MatCardModule, CommonModule, MatButtonModule],
   templateUrl: './passagem.component.html',
   styleUrl: './passagem.component.scss'
 })

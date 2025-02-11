@@ -1,20 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import {
-  AbstractControl,
-  AsyncValidatorFn,
-  FormControl,
   FormGroup,
   NonNullableFormBuilder,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from '../../modules/modal/modal.component';
 import { MatChipSelectionChange } from '@angular/material/chips';
-import { UnidadeFederativa } from '../types/types';
+import { DadosBusca} from '../types/types';
 import { UnidadeFederativaService } from './unidade-federativa.service';
-import { catchError, map, Observable, of } from 'rxjs';
-import { dateValidator, dateValidatorVolta, estadoValidator } from '../types/functions';
+import {
+  dateValidator,
+  dateValidatorVolta,
+  estadoValidator,
+} from '../types/functions';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +24,7 @@ export class FormBuscaService {
   #estados$ = inject(UnidadeFederativaService);
 
   formBusca: FormGroup = this.#fb.group({
-    formaViagem: ['', [Validators.required]],
+    somenteIda: [false, [Validators.required]],
     origem: [
       null,
       {
@@ -40,28 +39,37 @@ export class FormBuscaService {
         asyncValidators: [estadoValidator(this.#estados$)],
       },
     ],
-    tipo: ['', [Validators.required]],
-    adultos: [0, [Validators.required]],
+    tipo: ['Econômica', [Validators.required]],
+    adultos: [1, [Validators.required]],
     criancas: [0],
     bebes: [0],
-    dateIda: [
-      null,
-      [
-        Validators.required, dateValidator(),
-      ],
-    ],
-    dateVolta: [
-      null,
-      [
-        Validators.required, dateValidatorVolta('dateIda'),
-      ],
-    ],
+    dateIda: [null, [Validators.required, dateValidator()]],
+    dateVolta: [null, [dateValidatorVolta('dateIda')]],
   });
 
   alterarTipo(evento: MatChipSelectionChange, tipo: string) {
     if (evento.selected) {
       this.formBusca.patchValue({ tipo });
     }
+  }
+
+  obterDadosBusca(): DadosBusca {
+    const dadosBusca: DadosBusca = {
+      pagina: 1,
+      porPagina: 50,
+      somenteIda: this.formBusca.get('somenteIda')?.value,
+      origemId: this.formBusca.get('origem')?.value.id,
+      destinoId: this.formBusca.get('destino')?.value.id,
+      tipo: this.formBusca.get('tipo')?.value,
+      passageirosAdultos: this.formBusca.get('adultos')?.value,
+      passageirosCriancas: this.formBusca.get('criancas')?.value,
+      passageirosBebes: this.formBusca.get('bebes')?.value,
+      dataIda: new Date(this.formBusca.get('dataIda')?.value).toISOString(),
+      dataVolta: new Date(
+        this.formBusca.get('dataVolta')?.value
+      ).toDateString(),
+    };
+    return dadosBusca;
   }
 
   getDescricaoPassageiros(): string {

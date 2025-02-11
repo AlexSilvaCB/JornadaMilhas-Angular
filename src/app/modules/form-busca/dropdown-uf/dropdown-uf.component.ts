@@ -32,7 +32,6 @@ export class DropdownUfComponent implements OnInit {
   @Input() label: string = '';
   @Input() iconePrefix: string = '';
   @Input() control!: FormControl;
-  @Input() errorValid: boolean | undefined = false;
 
   protected filteredOptions!: Observable<UnidadeFederativa[]>;
   protected options: UnidadeFederativa[] = [];

@@ -5,17 +5,18 @@ import { Observable } from 'rxjs';
 import { Resultado } from '../types/types';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PassagensService {
+  #apiUrl = environment.apiUrl;
+  #http = inject(HttpClient);
 
-   #apiUrl = environment.apiUrl
-   #http = inject(HttpClient)
+  constructor() {}
 
-  constructor() { }
-
-  getPassagens(search: any): Observable<Resultado>{
+  getPassagens(search: any): Observable<Resultado> {
     const params = search;
-    return this.#http.get<Resultado>(this.#apiUrl + '/passagem/search', {params})
+    return this.#http.get<Resultado>(this.#apiUrl + '/passagem/search', {
+      params,
+    });
   }
 }

@@ -15,7 +15,10 @@ import {
   MAT_DATE_LOCALE,
   MatNativeDateModule,
 } from '@angular/material/core';
-import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MatDatepickerInputEvent,
+  MatDatepickerModule,
+} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
@@ -29,7 +32,6 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatInputModule,
     FormsModule,
-    JsonPipe
   ],
   templateUrl: './form-date.component.html',
   styleUrl: './form-date.component.scss',
@@ -39,9 +41,10 @@ export class FormDateComponent implements OnInit {
   @Input() dadosTitulo: any;
   @Input() selecao: string = '';
   @Input() formPerfil: boolean = false;
-  @Input() control!:FormControl;
+  @Input() control!: FormControl;
 
-  private readonly _adapter = inject<DateAdapter<unknown, unknown>>(DateAdapter);
+  private readonly _adapter =
+    inject<DateAdapter<unknown, unknown>>(DateAdapter);
   private readonly _locale = signal(inject<unknown>(MAT_DATE_LOCALE));
   readonly dateFormatString = computed(() => {
     if (this._locale() === 'pt-BR') {
@@ -58,5 +61,4 @@ export class FormDateComponent implements OnInit {
     this._locale.set('pt-BR');
     this._adapter.setLocale(this._locale());
   }
-
 }

@@ -1,12 +1,22 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  inject,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  MatButtonToggleChange,
+  MatButtonToggleModule,
+} from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ContainerComponent } from '../container/container.component';
 import { CardComponent } from '../card/card.component';
 import { FormBuscaService } from '../../core/services/form-busca.service';
@@ -39,8 +49,9 @@ export class FormBuscaComponent implements OnInit {
   protected obterControleOrigem!: FormControl;
   protected obterControleDestino!: FormControl;
   protected obterControleDateIda!: FormControl;
-  protected obterControleDateVolta!:FormControl;
+  protected obterControleDateVolta!: FormControl;
   @Output() realizarBusca = new EventEmitter();
+  cdr = inject(ChangeDetectorRef);
 
   constructor() {}
 
@@ -62,11 +73,26 @@ export class FormBuscaComponent implements OnInit {
       this.formBuscaService.formBusca
     );
 
+    this.cdr.detectChanges();
   }
 
-  buscar() {
-    console.log(this.formBuscaService.formBusca.value);
-    const formBuscaValue = this.formBuscaService.formBusca.value
-    this.realizarBusca.emit(formBuscaValue);
+  protected valorBtnToggle(e: MatButtonToggleChange) {
+    this.formBuscaService.formBusca
+      .get('somenteIda')
+      ?.patchValue(e.value == '0' ? true : false);
+    if (e.value == '0') {
+      this.formBuscaService.formBusca
+        .get('dateVolta')
+        ?.addValidators(Validators.required);
+    } else {
+      this.formBuscaService.formBusca
+        .get('dateVolta')
+        ?.removeValidators(Validators.required);
+    }
+    this.formBuscaService.formBusca.get('dateVolta')?.updateValueAndValidity();
+  }
+
+  protected buscar() {
+    this.realizarBusca.emit(this.formBuscaService.obterDadosBusca());
   }
 }

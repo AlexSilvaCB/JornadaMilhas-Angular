@@ -48,7 +48,7 @@ export interface Resultado {
   resultado: Passagem[];
 }
 
-export interface Passagem{
+export interface Passagem {
   tipo: string;
   precoIda: number;
   precoVolta: number;
@@ -64,14 +64,33 @@ export interface Passagem{
   orcamento: Orcamento[];
 }
 
-export interface Companhia{
+export interface Companhia {
   id: string;
   nome: string;
 }
 
-export interface Orcamento{
+export interface Orcamento {
   descricao: string;
   preco: number;
   taxaEmbarque: number;
-  total: number
+  total: number;
+}
+
+export interface DadosBusca {
+  somenteIda?: boolean;
+  passageirosAdultos?: number;
+  passageirosCriancas?: number;
+  passageirosBebes?: number;
+  tipo?: string;
+  origemId?: number;
+  destinoId?: number;
+  precoMin?: number;
+  precoMax?: number;
+  conexoes?: number;
+  tempoVoo?: number;
+  dataIda?: string;
+  dataVolta?: string;
+  companhiasId?: number[];
+  pagina: number;
+  porPagina: number;
 }

@@ -3,7 +3,7 @@
   <app-banner [srcSignal]="srcBusca" [alt]="altBusca" />
 
   <app-container>
-    <app-form-busca />
+    <app-form-busca (realizarBusca)="buscarPassagem($event)" />
     <section class="conteudo">
       Filtros, Cards de Recomendados e Cards de Passagens
     </section>

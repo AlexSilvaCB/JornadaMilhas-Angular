@@ -1,16 +1,17 @@
 <mat-form-field class="input-container" appearance="outline">
   <mat-label>{{ titulo }}</mat-label>
   <input
-  matInput
-  [formControl]="control"
-  [matDatepicker]="dadosTitulo"
-  readonly
+    matInput
+    [formControl]="control"
+    [matDatepicker]="dadosTitulo"
+    readonly
   />
-  <mat-datepicker-toggle matIconSuffix [for]="dadosTitulo"></mat-datepicker-toggle>
-  <mat-datepicker #dadosTitulo [disabled]="formPerfil"></mat-datepicker>
+  <mat-datepicker-toggle
+    matIconSuffix
+    [for]="dadosTitulo"
+  ></mat-datepicker-toggle>
+  <mat-datepicker #dadosTitulo></mat-datepicker>
   @if( control.invalid && control.value !== null ){
-    <mat-hint>Data menor que atual</mat-hint>
+  <mat-hint>Data menor que atual</mat-hint>
   }
-
 </mat-form-field>
-

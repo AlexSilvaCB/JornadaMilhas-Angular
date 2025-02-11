@@ -1,14 +1,22 @@
-<app-container>
+<app-container class="bgContainer">
   <app-card variant="secondary" class="form-busca">
     <h2>Passagens</h2>
     <form [formGroup]="formBuscaService.formBusca" (ngSubmit)="buscar()">
       <div class="flex-container">
         <mat-button-toggle-group
           aria-label="Tipo de Passagem"
-          formControlName="formaViagem"
+          (change)="valorBtnToggle($event)"
         >
-          <mat-button-toggle value="IDA E VOLTA">IDA E VOLTA</mat-button-toggle>
-          <mat-button-toggle value="SOMENTE IDA">SOMENTE IDA</mat-button-toggle>
+          <mat-button-toggle
+            value="0"
+            [checked]="formBuscaService.formBusca.get('somenteIda')?.value"
+            >IDA E VOLTA</mat-button-toggle
+          >
+          <mat-button-toggle
+            value="1"
+            [checked]="!formBuscaService.formBusca.get('somenteIda')?.value"
+            >SOMENTE IDA</mat-button-toggle
+          >
         </mat-button-toggle-group>
 
         <mat-chip-set aria-label="Seleção de Passagens">
@@ -39,17 +47,16 @@
         <button
           type="button"
           mat-icon-button
-          (click)="formBuscaService.openDialog()">
+          (click)="formBuscaService.openDialog()"
+        >
           <mat-icon>menu</mat-icon>
         </button>
-
       </div>
       <div class="flex-container">
         <app-dropdown-uf
           [label]="'Origem'"
           [iconePrefix]="'flight_takeoff'"
           [control]="obterControleOrigem"
-          [errorValid]="false"
         />
 
         <button type="button" mat-icon-button>
@@ -68,14 +75,14 @@
           [selecao]="'dateIda'"
           [control]="obterControleDateIda"
         />
-
+        @if(formBuscaService.formBusca.get('somenteIda')?.value){
         <app-form-date
           titulo="Data da volta"
           dadosTitulo="volta"
           selecao="dateVolta"
-         [control]="obterControleDateVolta"
+          [control]="obterControleDateVolta"
         />
-
+        }
         <button
           type="submit"
           [disabled]="!formBuscaService.formBusca.valid"

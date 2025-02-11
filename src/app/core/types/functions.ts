@@ -55,8 +55,9 @@ export function cpfValidator(): ValidatorFn {
         if(control.value === null){
           return null
         }
-        const inputDate = new Date(control.value).getDay();
-        const currentDate = new Date().getDay();
+        const inputDate = new Date(control.value).getDate();
+        console.log(control.value)
+        const currentDate = new Date().getDate();
 
         if (inputDate < currentDate) {
           return { 'invalidDate': { value: control.value } };
@@ -72,9 +73,9 @@ export function cpfValidator(): ValidatorFn {
           return null
         }
 
-        const inputIda = new Date(control.root.get(dados)?.value).getDay()
-        const inputDate = new Date(control.value).getDay();
-        const currentDate = new Date().getDay();
+        const inputIda = new Date(control.root.get(dados)?.value).getDate()
+        const inputDate = new Date(control.value).getDate();
+        const currentDate = new Date().getDate();
 
         if (inputDate < currentDate || inputDate <= inputIda) {
           return { 'invalidDate': { value: control.value } };
@@ -84,12 +85,12 @@ export function cpfValidator(): ValidatorFn {
     }
 
 
-  export function obterControle(nome: string, form: FormGroup): FormControl {
+  export function obterControle<T>(nome: string, form: FormGroup): FormControl {
         const control = form.get(nome);
         if (!control) {
           throw new Error(`FormControl com nome "${nome}" não existe.`);
         }
-        return control as FormControl;
+        return control as FormControl<T>;
       }
 
   export function estadoValidator(Uf: UnidadeFederativaService): AsyncValidatorFn {
