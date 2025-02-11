@@ -6,8 +6,8 @@ import { HeaderComponent } from "../../modules/header/header.component";
 import { FooterComponent } from "../../modules/footer/footer.component";
 import { PassagensService } from '../../core/services/passagens.service';
 import { DadosBusca, Passagem } from '../../core/types/types';
-import { PassagemComponent } from './passagem/passagem.component';
 import { FormBuscaService } from '../../core/services/form-busca.service';
+import { PassagemComponent } from '../../modules/passagem/passagem.component';
 
 @Component({
   selector: 'app-busca',
