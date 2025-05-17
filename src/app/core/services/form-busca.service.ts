@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import {
+  FormControl,
   FormGroup,
   NonNullableFormBuilder,
   Validators,
@@ -13,6 +14,7 @@ import {
   dateValidator,
   dateValidatorVolta,
   estadoValidator,
+  obterControle,
 } from '../types/functions';
 
 @Injectable({
@@ -45,6 +47,7 @@ export class FormBuscaService {
     bebes: [0],
     dateIda: [null, [Validators.required, dateValidator()]],
     dateVolta: [null, [dateValidatorVolta('dateIda')]],
+    conexoes: new FormControl(null)
   });
 
   alterarTipo(evento: MatChipSelectionChange, tipo: string) {
@@ -64,11 +67,13 @@ export class FormBuscaService {
       passageirosAdultos: this.formBusca.get('adultos')?.value,
       passageirosCriancas: this.formBusca.get('criancas')?.value,
       passageirosBebes: this.formBusca.get('bebes')?.value,
-      dataIda: new Date(this.formBusca.get('dataIda')?.value).toISOString(),
-      dataVolta: new Date(
-        this.formBusca.get('dataVolta')?.value
-      ).toDateString(),
+      dataIda: new Date(this.formBusca.get('dateIda')?.value).toISOString(),
+      dataVolta: new Date(this.formBusca.get('dateVolta')?.value).toISOString(),
     };
+    const conexoesControl = obterControle('conexoes', this.formBusca);
+    if (conexoesControl.value) {
+      dadosBusca.conexoes = conexoesControl.value
+    }
     return dadosBusca;
   }
 

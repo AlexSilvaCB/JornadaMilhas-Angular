@@ -8,11 +8,12 @@ import { PassagensService } from '../../core/services/passagens.service';
 import { DadosBusca, Passagem } from '../../core/types/types';
 import { FormBuscaService } from '../../core/services/form-busca.service';
 import { PassagemComponent } from '../../modules/passagem/passagem.component';
+import { FiltrosComplementaresComponent } from "../../modules/filtros-complementares/filtros-complementares.component";
 
 @Component({
   selector: 'app-busca',
   standalone: true,
-  imports: [FormBuscaComponent, ContainerComponent, BannerComponent, HeaderComponent, PassagemComponent, FooterComponent],
+  imports: [FormBuscaComponent, ContainerComponent, BannerComponent, HeaderComponent, PassagemComponent, FooterComponent, FiltrosComplementaresComponent],
   templateUrl: './busca.component.html',
   styleUrl: './busca.component.scss'
 })

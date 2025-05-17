@@ -5,9 +5,13 @@
   <app-container>
     <app-form-busca (realizarBusca)="buscarPassagem($event)" />
     <section class="conteudo">
-      Filtros, Cards de Recomendados e Cards de Passagens
+      <aside class="filtros-adicionais">
+        <app-filtros-complementares (realizarBusca)="buscarPassagem($event)" />
+      </aside>
+      <div class="passagens">
+        <app-passagem [passagem]="passagem" />
+      </div>
     </section>
   </app-container>
 </div>
-<app-passagem [passagem]="passagem" />
 <app-footer />

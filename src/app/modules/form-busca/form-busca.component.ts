@@ -93,6 +93,8 @@ export class FormBuscaComponent implements OnInit {
   }
 
   protected buscar() {
+    console.log('estou aqui!!!')
+    console.log(this.formBuscaService.formBusca.get('dateIda')?.value)
     this.realizarBusca.emit(this.formBuscaService.obterDadosBusca());
   }
 }

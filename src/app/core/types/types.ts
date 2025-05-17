@@ -94,3 +94,8 @@ export interface DadosBusca {
   pagina: number;
   porPagina: number;
 }
+
+export interface OpcoesDeParada{
+  display: string
+  value: string
+}
