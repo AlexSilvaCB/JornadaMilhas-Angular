@@ -6,11 +6,12 @@ import { ParadasComponent } from './paradas/paradas.component';
 import { PrecosComponent } from './precos/precos.component';
 import { FormBuscaService } from '../../core/services/form-busca.service';
 import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-filtros-complementares',
   standalone: true,
-  imports: [CardComponent, CompanhiasComponent, ParadasComponent, PrecosComponent ,MatIconModule, MatButtonModule],
+  imports: [CardComponent, CompanhiasComponent, ParadasComponent, PrecosComponent, MatIconModule, MatButtonModule, ReactiveFormsModule],
   templateUrl: './filtros-complementares.component.html',
   styleUrl: './filtros-complementares.component.scss'
 })
@@ -20,6 +21,7 @@ export class FiltrosComplementaresComponent {
 
   busca(){
     if(!this.formBuscaService.formBusca.valid){
+      console.log(this.formBuscaService.formBusca.markAllAsTouched())
         this.formBuscaService.formBusca.markAllAsTouched()
         window.scroll({
           top:0,

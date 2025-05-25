@@ -99,3 +99,9 @@ export interface OpcoesDeParada{
   display: string
   value: string
 }
+
+export interface Companhia{
+    id: string;
+    nome: string;
+}
+

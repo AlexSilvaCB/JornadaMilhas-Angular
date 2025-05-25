@@ -26,7 +26,7 @@ export class BuscaComponent implements OnInit{
 
 
   ngOnInit(): void {
-    const buscaPadrao = {
+    const buscaPadrao: DadosBusca = {
       pagina: 1,
       porPagina: 25,
       somenteIda: false,
@@ -35,7 +35,7 @@ export class BuscaComponent implements OnInit{
       tipo: "Executiva",
   }
 
-  const busca = this.#formBuscaService.formBusca.valid ? this.#formBuscaService.obterDadosBusca : buscaPadrao;
+  const busca = this.#formBuscaService.formBusca.valid ? this.#formBuscaService.obterDadosBusca() : buscaPadrao;
   console.log(this.#formBuscaService.formBusca.valid)
 
   this.#passagensService.getPassagens(busca).subscribe(

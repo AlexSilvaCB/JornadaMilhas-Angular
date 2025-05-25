@@ -47,7 +47,8 @@ export class FormBuscaService {
     bebes: [0],
     dateIda: [null, [Validators.required, dateValidator()]],
     dateVolta: [null, [dateValidatorVolta('dateIda')]],
-    conexoes: new FormControl(null)
+    conexoes: new FormControl(null),
+    companhias: new FormControl(null),
   });
 
   alterarTipo(evento: MatChipSelectionChange, tipo: string) {
@@ -70,10 +71,21 @@ export class FormBuscaService {
       dataIda: new Date(this.formBusca.get('dateIda')?.value).toISOString(),
       dataVolta: new Date(this.formBusca.get('dateVolta')?.value).toISOString(),
     };
-    const conexoesControl = obterControle('conexoes', this.formBusca);
+    const dataVoltaControl = obterControle<Date>('dateVolta', this.formBusca);
+    if (dataVoltaControl.value) {
+      dadosBusca.dataVolta = dataVoltaControl.value.toISOString();
+    }
+
+    const conexoesControl = obterControle<number>('conexoes', this.formBusca);
     if (conexoesControl.value) {
       dadosBusca.conexoes = conexoesControl.value
     }
+
+    const companhiasControl = obterControle<number[]>('companhias', this.formBusca);
+    if(companhiasControl.value){
+      dadosBusca.companhiasId = companhiasControl.value
+    }
+
     return dadosBusca;
   }
 
