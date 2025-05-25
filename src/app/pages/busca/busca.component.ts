@@ -9,6 +9,7 @@ import { DadosBusca, Passagem } from '../../core/types/types';
 import { FormBuscaService } from '../../core/services/form-busca.service';
 import { PassagemComponent } from '../../modules/passagem/passagem.component';
 import { FiltrosComplementaresComponent } from "../../modules/filtros-complementares/filtros-complementares.component";
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-busca',
@@ -36,11 +37,15 @@ export class BuscaComponent implements OnInit{
   }
 
   const busca = this.#formBuscaService.formBusca.valid ? this.#formBuscaService.obterDadosBusca() : buscaPadrao;
-  console.log(this.#formBuscaService.formBusca.valid)
-
-  this.#passagensService.getPassagens(busca).subscribe(
+  this.#passagensService.getPassagens(busca)
+  .pipe(take(1))
+  .subscribe(
     res => {
      this.passagem = res.resultado
+     this.#formBuscaService.formBusca.patchValue({
+      precoMin: res.precoMin,
+      precoMax: res.precoMax
+     })
     }
   )
 }

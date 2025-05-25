@@ -7,6 +7,7 @@ import { PrecosComponent } from './precos/precos.component';
 import { FormBuscaService } from '../../core/services/form-busca.service';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PassagensService } from '../../core/services/passagens.service';
 
 @Component({
   selector: 'app-filtros-complementares',
@@ -18,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class FiltrosComplementaresComponent {
   @Output() realizarBusca = new EventEmitter();
   formBuscaService = inject(FormBuscaService);
+  #passagemService = inject(PassagensService);
 
   busca(){
     if(!this.formBuscaService.formBusca.valid){
@@ -33,6 +35,13 @@ export class FiltrosComplementaresComponent {
     this.realizarBusca.emit(this.formBuscaService.obterDadosBusca())
   }
 
-
+  limparFiltros(){
+    this.formBuscaService.formBusca.patchValue({
+      conexoes: null,
+      companhias:null,
+      precoMin: this.#passagemService.precoMin,
+      precoMax: this.#passagemService.precoMax,
+    })
+  }
 
 }

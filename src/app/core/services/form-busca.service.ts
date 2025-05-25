@@ -47,8 +47,10 @@ export class FormBuscaService {
     bebes: [0],
     dateIda: [null, [Validators.required, dateValidator()]],
     dateVolta: [null, [dateValidatorVolta('dateIda')]],
-    conexoes: new FormControl(null),
-    companhias: new FormControl(null),
+    conexoes: [null],
+    companhias: [null],
+    precoMin: new FormControl(null),
+    precoMax: new FormControl(null)
   });
 
   alterarTipo(evento: MatChipSelectionChange, tipo: string) {
@@ -85,6 +87,18 @@ export class FormBuscaService {
     if(companhiasControl.value){
       dadosBusca.companhiasId = companhiasControl.value
     }
+
+    const precoMinControl = obterControle<number>('precoMin', this.formBusca);
+    if(precoMinControl.value){
+      dadosBusca.precoMin = precoMinControl.value
+    }
+
+     const precoMaxControl = obterControle<number>('precoMax', this.formBusca);
+    if(precoMaxControl.value){
+      dadosBusca.precoMax = precoMaxControl.value
+    }
+
+
 
     return dadosBusca;
   }
