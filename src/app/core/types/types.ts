@@ -105,3 +105,8 @@ export interface Companhia{
     nome: string;
 }
 
+export interface Destaques {
+  maisRapida: Passagem;
+  maisBarata: Passagem;
+  sugerida:   Passagem;
+}

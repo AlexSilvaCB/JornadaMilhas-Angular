@@ -4,7 +4,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-passagem',
   standalone: true,
@@ -13,5 +12,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './passagem.component.scss'
 })
 export class PassagemComponent {
-  @Input() passagem!: Passagem[];
+  @Input() passagem!: Passagem;
+
+get textoIdaVolta(){
+    if(!this.passagem.dataVolta){
+      return "Somente ida"
+    }
+      return "Ida e volta"
+  }
 }

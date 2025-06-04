@@ -1,15 +1,28 @@
 <app-header />
 <div class="busca-page">
-  <app-banner [srcSignal]="srcBusca" [alt]="altBusca" />
-
   <app-container>
     <app-form-busca (realizarBusca)="buscarPassagem($event)" />
+
     <section class="conteudo">
       <aside class="filtros-adicionais">
         <app-filtros-complementares (realizarBusca)="buscarPassagem($event)" />
       </aside>
       <div class="passagens">
-        <app-passagem [passagem]="passagem" />
+        <div class="destaques">
+          <app-card variant="primary">
+            <app-passagem-destaque destacadaPor="Menor preço" [passagem]="destaques?.maisBarata"/>
+          </app-card>
+          <app-card variant="primary">
+            <app-passagem-destaque destacadaPor="Recomendado" [passagem]="destaques?.maisRapida" />
+          </app-card>
+          <app-card variant="primary">
+            <app-passagem-destaque destacadaPor="Menor tempo" [passagem]="destaques?.sugerida"/>
+          </app-card>
+        </div>
+
+        @for (pass of passagem; track $index) {
+        <app-passagem [passagem]="pass" />
+        }
       </div>
     </section>
   </app-container>
