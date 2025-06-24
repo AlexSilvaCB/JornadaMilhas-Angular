@@ -15,4 +15,6 @@ export class PassagemDestaqueComponent {
   @Input()passagem?: Passagem;
   @Input()variant: 'primary' | 'secondary' | 'default'  = 'primary';
 
+  
+
 }

@@ -65,4 +65,9 @@ buscarPassagem(value:DadosBusca){
     this.destaques = this.#passagensService.obterPassagensDestaques(this.passagem);
   }
 
+  limparFiltros() {
+    this.#formBuscaService.resetarFiltros();
+    this.ngOnInit();
+  }
+
 }

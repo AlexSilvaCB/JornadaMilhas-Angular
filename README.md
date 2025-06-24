@@ -1,27 +1,19 @@
 # JornadaMilhas
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
+Jornada Milhas" refere-se a um projeto prático e um curso que faz parte da formação de desenvolvimento web, focado em Angular, onde se constrói um sistema para uma agência de viagens. O projeto envolve a criação de uma API para exibir ofertas de viagens, com foco no cadastro e gerenciamento de ofertas pelo lado administrativo.
 
-## Development server
+##Em detalhes:
+##Projeto Prático:
+"Jornada Milhas" é um projeto prático desenvolvido em Angular, para aplicar conceitos de desenvolvimento web.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+##Foco em API:
+O projeto se concentra na construção de uma API (Application Programming Interface) para uma aplicação web de viagens, que será consumida pelo front-end.
 
-## Code scaffolding
+##Funcionalidades:
+A API lida com dados como usuários, depoimentos, destinos e ofertas de viagem, permitindo a consulta, cadastro e gerenciamento dessas informações. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+##Tecnologias:
+O projeto utiliza tecnologias como Angular no front-end e Node.js para a API, além de outras ferramentas e bibliotecas.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+##Fases:
+O desenvolvimento do "Jornada Milhas" é dividido em etapas, começando com a aplicação console, progredindo para o consumo da API de forma assíncrona, e explorando recursos como testes de unidade e integração. 
